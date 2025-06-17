@@ -26,7 +26,6 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           {/* Placeholder routes for future pages */}
-          <Route path="/mentorship" element={<Contact />} />
           <Route path="/projects" element={<Contact />} />
           <Route path="/innobot" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

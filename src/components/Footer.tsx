@@ -1,4 +1,3 @@
-
 import { Bot, Youtube, Users, MessageCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +7,6 @@ export const Footer = () => {
   const quickLinks = [
     { name: "Starter Kits", href: "/starter-kits" },
     { name: "Custom Builds", href: "/custom-builds" },
-    { name: "Mentorship", href: "/mentorship" },
     { name: "About Us", href: "/about" }
   ];
 

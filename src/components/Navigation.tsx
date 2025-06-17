@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Bot } from "lucide-react";
@@ -12,7 +11,6 @@ export const Navigation = () => {
     { name: "Home", href: "/" },
     { name: "Starter Kits", href: "/starter-kits" },
     { name: "Custom Builds", href: "/custom-builds" },
-    { name: "Mentorship", href: "/mentorship" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
