@@ -17,8 +17,7 @@ export const Navigation = () => {
     { name: "Starter Kits", action: () => navigate("/starter-kits") },
     { name: "Custom Builds", action: () => navigate("/custom-builds") },
     { name: "Innobot", action: () => navigate("/innobot") },
-    { name: "About", action: () => navigate("/about") },
-    { name: "Contact", action: () => navigate("/contact") }
+    { name: "About", action: () => navigate("/about") }
   ];
 
   return (
