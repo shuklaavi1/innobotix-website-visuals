@@ -27,18 +27,20 @@ export const StarterKits = () => {
   ];
 
   const components = [
-    "Arduino Uno R3",
-    "Servo Motors (2x)",
+    "Arduino",
+    "L298N Motor Driver",
+    "IR Sensors (2x)",
     "Ultrasonic Sensor",
-    "LED Matrix Display",
     "Jumper Wires",
     "Breadboard",
-    "Resistors Set",
+    "2 Motors + Wheels",
+    "Buzzer + LED",
+    "Battery",
     "Project Manual"
   ];
 
   const featureHighlights = [
-    "🔹 5+ Beginner-Friendly Projects",
+    "🔹 10+ Beginner-Friendly Projects",
     "🔹 Pre-tested Components",
     "🔹 Step-by-step Video Guides",
     "🔹 🎓 Certification on Completion"
@@ -93,7 +95,7 @@ export const StarterKits = () => {
               {/* Price Badge */}
               <div className="absolute top-4 right-4">
                 <Badge className="bg-green-500 text-white text-lg px-4 py-2">
-                  ₹2,999
+                  ₹999
                 </Badge>
               </div>
             </div>
@@ -140,7 +142,7 @@ export const StarterKits = () => {
                 onClick={() => navigate("/starter-kits")}
                 className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg py-6"
               >
-                Buy Now - ₹2,999
+                Buy Now - ₹999
               </Button>
               <Button 
                 size="lg"
