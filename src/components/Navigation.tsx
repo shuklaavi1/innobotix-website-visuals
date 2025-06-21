@@ -12,24 +12,13 @@ export const Navigation = () => {
     window.open("https://chat.whatsapp.com/your-group-link", "_blank");
   };
 
-  const scrollToTestimonials = () => {
-    const testimonialsElement = document.getElementById('testimonials');
-    if (testimonialsElement) {
-      testimonialsElement.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      navigate('/#testimonials');
-    }
-  };
-
   const navItems = [
     { name: "Home", action: () => navigate("/") },
     { name: "Starter Kits", action: () => navigate("/starter-kits") },
     { name: "Custom Builds", action: () => navigate("/custom-builds") },
     { name: "Innobot", action: () => navigate("/innobot") },
-    { name: "Testimonials", action: scrollToTestimonials },
     { name: "About", action: () => navigate("/about") },
-    { name: "Contact", action: () => navigate("/contact") },
-    { name: "Join WhatsApp", action: handleWhatsAppClick }
+    { name: "Contact", action: () => navigate("/contact") }
   ];
 
   return (
@@ -51,7 +40,7 @@ export const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            {navItems.slice(0, -2).map((item) => (
+            {navItems.map((item) => (
               <button
                 key={item.name}
                 onClick={item.action}
@@ -102,6 +91,15 @@ export const Navigation = () => {
                 {item.name}
               </button>
             ))}
+            <button
+              onClick={() => {
+                handleWhatsAppClick();
+                setIsOpen(false);
+              }}
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+            >
+              Join WhatsApp
+            </button>
             <div className="px-4 pt-2">
               <Button 
                 onClick={() => {
