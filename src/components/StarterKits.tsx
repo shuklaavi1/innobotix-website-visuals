@@ -85,7 +85,7 @@ export const StarterKits = () => {
 
             <div className="bg-gradient-to-br from-slate-100 to-blue-50 rounded-2xl p-8">
               <img 
-                src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop"
+                src="https://i.postimg.cc/6p8rDwwJ/An-Indian-teenage-boy-in-a-dark-room-opening-a-mysterious-box-labeled-INNOBOTIX-Inside-the-box-ar.png"
                 alt="Robotics Starter Kit Components"
                 className="w-full h-80 object-cover rounded-lg shadow-lg"
               />
