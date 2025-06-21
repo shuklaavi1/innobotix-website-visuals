@@ -6,19 +6,19 @@ export const CustomBuildProcess = () => {
   const processSteps = [
     {
       icon: <Brain className="w-12 h-12" />,
-      title: "🧠 Share your robot idea",
+      title: "🧠 Submit Idea",
       description: "Tell us about your robotics project vision and requirements",
       color: "from-purple-500 to-pink-500"
     },
     {
       icon: <Wrench className="w-12 h-12" />,
-      title: "🛠️ We assign it to a builder",
+      title: "🛠️ We Build It",
       description: "Our experts will analyze feasibility and create a detailed proposal",
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: <Package className="w-12 h-12" />,
-      title: "📦 Robot is delivered to you",
+      title: "📦 Delivered to You",
       description: "Get your custom-built robot with documentation and support",
       color: "from-green-500 to-emerald-500"
     }
@@ -28,9 +28,12 @@ export const CustomBuildProcess = () => {
     <section className="py-20 px-4 bg-gradient-to-br from-gray-50 to-blue-50">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
+          <p className="text-lg text-gray-600 mb-4 italic">
+            "From your brain to reality—without lifting a soldering iron."
+          </p>
           <h2 className="text-4xl font-bold mb-4">How It Works</h2>
           <p className="text-xl text-gray-600 mb-8">
-            From your brain to reality—without you lifting a soldering iron.
+            Three simple steps to bring your robotics vision to life.
           </p>
         </div>
         

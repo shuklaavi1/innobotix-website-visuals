@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Book, Users, Youtube } from "lucide-react";
+import { Book, Users, Youtube, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const StarterKits = () => {
@@ -37,6 +37,13 @@ export const StarterKits = () => {
     "Project Manual"
   ];
 
+  const featureHighlights = [
+    "🔹 5+ Beginner-Friendly Projects",
+    "🔹 Pre-tested Components",
+    "🔹 Step-by-step Video Guides",
+    "🔹 🎓 Certification on Completion"
+  ];
+
   return (
     <section id="starter-kits" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,8 +58,31 @@ export const StarterKits = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Product Image */}
+          {/* Feature Highlights and Image */}
           <div className="relative">
+            {/* Feature List */}
+            <div className="mb-8">
+              <div className="space-y-2">
+                {featureHighlights.map((feature, index) => (
+                  <div key={index} className="text-lg text-gray-700 font-medium">
+                    {feature}
+                  </div>
+                ))}
+              </div>
+              
+              {/* Get Certified Button */}
+              <div className="mt-6">
+                <Button 
+                  size="lg"
+                  onClick={() => navigate("/starter-kits#certification")}
+                  className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white"
+                >
+                  <Award className="w-5 h-5 mr-2" />
+                  Get Certified
+                </Button>
+              </div>
+            </div>
+
             <div className="bg-gradient-to-br from-slate-100 to-blue-50 rounded-2xl p-8">
               <img 
                 src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop"
