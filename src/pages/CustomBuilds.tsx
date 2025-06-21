@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Bot, Lightbulb, Users, ArrowRight } from "lucide-react";
+import { CustomBuildProcess } from "@/components/CustomBuildProcess";
 import { useToast } from "@/hooks/use-toast";
 
 const CustomBuilds = () => {
@@ -20,12 +20,28 @@ const CustomBuilds = () => {
   });
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Create mailto link
+    const subject = `Custom Robot Build Request - ${formData.projectTitle}`;
+    const body = `
+Name: ${formData.name}
+Email: ${formData.email}
+Project Title: ${formData.projectTitle}
+Description: ${formData.description}
+Budget Range: ${formData.budget}
+Timeline: ${formData.timeline}
+    `;
+    
+    const mailtoLink = `mailto:hustlewithavi1@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+    
     toast({
-      title: "Project Idea Submitted!",
-      description: "We'll get back to you within 24 hours with a proposal.",
+      title: "Request Prepared!",
+      description: "Your email client will open with the project details. Send the email and we'll get back to you within 24 hours!",
     });
+    
     setFormData({
       name: "",
       email: "",
@@ -43,74 +59,33 @@ const CustomBuilds = () => {
     }));
   };
 
-  const processSteps = [
-    {
-      icon: <Lightbulb className="w-8 h-8" />,
-      title: "Submit Your Idea",
-      description: "Tell us about your robotics project vision and requirements"
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "Consult with Engineers",
-      description: "Our experts will analyze feasibility and create a detailed proposal"
-    },
-    {
-      icon: <Bot className="w-8 h-8" />,
-      title: "Receive Your Robot",
-      description: "Get your custom-built robot with documentation and support"
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 animate-fade-in">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-slide-in-up">
             Have an Idea? 
             <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
               {" "}We'll Build It
             </span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto animate-slide-in-up">
             Transform your robotics vision into reality with our custom build service. 
             From concept to completion, we bring your ideas to life.
           </p>
+          <div className="animate-scale-in">
+            <p className="text-2xl font-semibold text-blue-600 italic">
+              "From your brain to reality—without you lifting a soldering iron."
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Process Steps */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {processSteps.map((step, index) => (
-              <div key={step.title} className="relative">
-                <Card className="h-full hover:shadow-lg transition-shadow">
-                  <CardHeader className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4 text-white">
-                      {step.icon}
-                    </div>
-                    <CardTitle className="text-xl">{step.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-center text-gray-600">
-                      {step.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-                {index < processSteps.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                    <ArrowRight className="w-8 h-8 text-blue-400" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CustomBuildProcess />
 
       {/* Project Submission Form */}
       <section className="py-16 px-4 bg-white">
@@ -122,7 +97,7 @@ const CustomBuilds = () => {
             </p>
           </div>
 
-          <Card>
+          <Card className="shadow-xl">
             <CardHeader>
               <CardTitle>Project Details</CardTitle>
               <CardDescription>
@@ -217,7 +192,7 @@ const CustomBuilds = () => {
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600">
+                <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg py-6">
                   Submit Project Idea
                 </Button>
               </form>

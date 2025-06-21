@@ -1,13 +1,17 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Bot, Users } from "lucide-react";
+import { ArrowDown, Bot, Users, MessageCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
   const navigate = useNavigate();
 
+  const handleWhatsAppClick = () => {
+    window.open("https://chat.whatsapp.com/your-group-link", "_blank");
+  };
+
   return (
-    <section className="relative overflow-hidden py-20 lg:py-32">
+    <section className="relative overflow-hidden py-20 lg:py-32 animate-fade-in">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-cyan-500/5" />
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
@@ -15,7 +19,7 @@ export const Hero = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-left animate-slide-in-left">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
               Build the Future with{" "}
               <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
@@ -32,7 +36,7 @@ export const Hero = () => {
               <Button 
                 size="lg"
                 onClick={() => navigate("/starter-kits")}
-                className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg px-8 py-6"
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg px-8 py-6 animate-scale-in"
               >
                 Explore Starter Kits
               </Button>
@@ -40,14 +44,22 @@ export const Hero = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => navigate("/custom-builds")}
-                className="border-blue-200 text-blue-600 hover:bg-blue-50 text-lg px-8 py-6"
+                className="border-blue-200 text-blue-600 hover:bg-blue-50 text-lg px-8 py-6 animate-scale-in"
               >
                 Request Custom Robot
+              </Button>
+              <Button 
+                size="lg"
+                onClick={handleWhatsAppClick}
+                className="bg-green-500 hover:bg-green-600 text-white text-lg px-8 py-6 animate-scale-in"
+              >
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Join WhatsApp Community
               </Button>
             </div>
 
             {/* Stats */}
-            <div className="mt-12 grid grid-cols-3 gap-8">
+            <div className="mt-12 grid grid-cols-3 gap-8 animate-fade-in-up">
               <div className="text-center lg:text-left">
                 <div className="text-3xl font-bold text-blue-600">5+</div>
                 <div className="text-sm text-gray-600">Projects Included</div>
@@ -58,14 +70,14 @@ export const Hero = () => {
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-3xl font-bold text-blue-600">24/7</div>
-                <div className="text-sm text-gray-600">Mentor Support</div>
+                <div className="text-sm text-gray-600">Community Support</div>
               </div>
             </div>
           </div>
 
           {/* Right Content - Hero Image */}
-          <div className="relative">
-            <div className="relative bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl p-8 shadow-2xl">
+          <div className="relative animate-slide-in-right">
+            <div className="relative bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl p-8 shadow-2xl hover-scale">
               <img 
                 src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop"
                 alt="Robotics Workspace"
@@ -73,10 +85,10 @@ export const Hero = () => {
               />
               
               {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 bg-white rounded-lg p-4 shadow-lg">
+              <div className="absolute -top-4 -right-4 bg-white rounded-lg p-4 shadow-lg animate-bounce">
                 <Bot className="w-8 h-8 text-blue-600" />
               </div>
-              <div className="absolute -bottom-4 -left-4 bg-white rounded-lg p-4 shadow-lg">
+              <div className="absolute -bottom-4 -left-4 bg-white rounded-lg p-4 shadow-lg animate-bounce">
                 <Users className="w-8 h-8 text-cyan-500" />
               </div>
             </div>
@@ -84,8 +96,8 @@ export const Hero = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-          <ArrowDown className="w-6 h-6 text-gray-400 animate-bounce" />
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ArrowDown className="w-6 h-6 text-gray-400" />
         </div>
       </div>
     </section>

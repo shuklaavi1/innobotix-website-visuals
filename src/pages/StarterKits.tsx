@@ -1,10 +1,11 @@
 
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { CertificationSection } from "@/components/CertificationSection";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Book, Users, Youtube, ArrowDown } from "lucide-react";
+import { Book, Users, Youtube } from "lucide-react";
 
 const StarterKits = () => {
   const projects = [
@@ -202,6 +203,8 @@ const StarterKits = () => {
           </div>
         </div>
       </section>
+
+      <CertificationSection />
 
       <Footer />
     </div>

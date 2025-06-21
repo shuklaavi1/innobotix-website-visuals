@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Bot } from "lucide-react";
@@ -7,12 +8,28 @@ export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
+  const handleWhatsAppClick = () => {
+    window.open("https://chat.whatsapp.com/your-group-link", "_blank");
+  };
+
+  const scrollToTestimonials = () => {
+    const testimonialsElement = document.getElementById('testimonials');
+    if (testimonialsElement) {
+      testimonialsElement.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/#testimonials');
+    }
+  };
+
   const navItems = [
-    { name: "Home", href: "/" },
-    { name: "Starter Kits", href: "/starter-kits" },
-    { name: "Custom Builds", href: "/custom-builds" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: "Home", action: () => navigate("/") },
+    { name: "Starter Kits", action: () => navigate("/starter-kits") },
+    { name: "Custom Builds", action: () => navigate("/custom-builds") },
+    { name: "Innobot", action: () => navigate("/innobot") },
+    { name: "Testimonials", action: scrollToTestimonials },
+    { name: "About", action: () => navigate("/about") },
+    { name: "Contact", action: () => navigate("/contact") },
+    { name: "Join WhatsApp", action: handleWhatsAppClick }
   ];
 
   return (
@@ -33,11 +50,11 @@ export const Navigation = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
+          <div className="hidden md:flex items-center space-x-6">
+            {navItems.slice(0, -2).map((item) => (
               <button
                 key={item.name}
-                onClick={() => navigate(item.href)}
+                onClick={item.action}
                 className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
               >
                 {item.name}
@@ -48,6 +65,13 @@ export const Navigation = () => {
               className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
             >
               Get Started
+            </Button>
+            <Button 
+              onClick={handleWhatsAppClick}
+              size="sm"
+              className="bg-green-500 hover:bg-green-600"
+            >
+              WhatsApp
             </Button>
           </div>
 
@@ -70,7 +94,7 @@ export const Navigation = () => {
               <button
                 key={item.name}
                 onClick={() => {
-                  navigate(item.href);
+                  item.action();
                   setIsOpen(false);
                 }}
                 className="block w-full text-left px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"

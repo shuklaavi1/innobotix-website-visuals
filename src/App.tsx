@@ -9,6 +9,7 @@ import StarterKits from "./pages/StarterKits";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import CustomBuilds from "./pages/CustomBuilds";
+import Innobot from "./pages/Innobot";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,11 +24,11 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/starter-kits" element={<StarterKits />} />
           <Route path="/custom-builds" element={<CustomBuilds />} />
+          <Route path="/innobot" element={<Innobot />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           {/* Placeholder routes for future pages */}
           <Route path="/projects" element={<Contact />} />
-          <Route path="/innobot" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
