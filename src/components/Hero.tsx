@@ -79,7 +79,7 @@ export const Hero = () => {
           <div className="relative animate-slide-in-right">
             <div className="relative bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl p-8 shadow-2xl hover-scale">
               <img 
-                src="https://images.app.goo.gl/SLKz6hznDtPRJXpx9"
+                src="https://i.postimg.cc/W19kpyNm/children-making-robot-23-2148863380.avif"
                 alt="Robotics Workspace"
                 className="w-full h-64 lg:h-80 object-cover rounded-lg"
               />
