@@ -6,9 +6,9 @@ import { Users, Bot, Book } from "lucide-react";
 
 const About = () => {
   const stats = [
-    { number: "500+", label: "Students Trained", icon: <Users className="w-8 h-8" /> },
-    { number: "50+", label: "Projects Built", icon: <Bot className="w-8 h-8" /> },
-    { number: "3+", label: "Years Experience", icon: <Book className="w-8 h-8" /> }
+    { number: "50+", label: "Students Trained", icon: <Users className="w-8 h-8" /> },
+    { number: "10+", label: "Projects Built", icon: <Bot className="w-8 h-8" /> },
+    { number: "1+", label: "Years Experience", icon: <Book className="w-8 h-8" /> }
   ];
 
   return (
@@ -48,7 +48,7 @@ const About = () => {
                   all at an affordable price.
                 </p>
                 <p>
-                  Today, Innobotix has helped over 500 students across India build their first robots 
+                  Today, Innobotix has helped over 5+ students to  build their first robots 
                   and pursue careers in technology.
                 </p>
               </div>
