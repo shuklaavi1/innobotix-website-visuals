@@ -12,7 +12,7 @@ const StarterKits = () => {
     {
       title: "Line Follower Robot",
       description: "Build a robot that follows black lines using IR sensors",
-      difficulty: "Beginner",
+      difficulty: "Intermediate",
       time: "2-3 hours"
     },
     {
@@ -31,27 +31,27 @@ const StarterKits = () => {
       title: "Smart Home System",
       description: "Build IoT-enabled home automation with sensors",
       difficulty: "Intermediate",
-      time: "5-6 hours"
+      time: "2-3 hours"
     },
     {
-      title: "Weather Station",
-      description: "Monitor temperature, humidity and display on LCD",
+      title: "Security Alert Buzzer",
+      description: "Simulates intruder detection alarm",
       difficulty: "Beginner",
       time: "2-3 hours"
     }
   ];
 
   const components = [
-    "Arduino Uno R3 Board",
-    "Servo Motors (2x SG90)",
+    "Arduino Nano",
+    "DC Motors (2x SG90)",
     "Ultrasonic Sensor HC-SR04",
     "IR Sensors (2x)",
-    "LED Matrix Display",
-    "LCD Display 16x2",
+    "Breadboard",
+    "Battery",
     "Jumper Wires (40 pieces)",
-    "Breadboard (Half Size)",
+    "LED + Wheels",
     "Resistors Set (20 pieces)",
-    "Push Buttons (4x)",
+    "Push Buttons",
     "Buzzer Module",
     "Project Manual & Code"
   ];
