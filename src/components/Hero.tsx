@@ -12,9 +12,9 @@ export const Hero = () => {
 
   return (
     <section className="relative overflow-hidden py-20 lg:py-32 animate-fade-in">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-cyan-500/5" />
-      <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
+      {/* Enhanced Background Pattern */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-cyan-500/10" />
+      <div className="absolute inset-0 bg-grid-slate-100 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -36,7 +36,7 @@ export const Hero = () => {
               <Button 
                 size="lg"
                 onClick={() => navigate("/starter-kits")}
-                className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg px-8 py-6 animate-scale-in"
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg px-8 py-6 animate-scale-in hover-scale glow-effect"
               >
                 Explore Starter Kits
               </Button>
@@ -44,14 +44,18 @@ export const Hero = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => navigate("/custom-builds")}
-                className="border-blue-200 text-blue-600 hover:bg-blue-50 text-lg px-8 py-6 animate-scale-in"
+                className="border-blue-200 text-blue-600 hover:bg-blue-50 text-lg px-8 py-6 animate-scale-in hover-scale"
               >
                 Request Custom Robot
               </Button>
+            </div>
+
+            {/* WhatsApp Community Button */}
+            <div className="mt-6 animate-fade-in-up">
               <Button 
                 size="lg"
                 onClick={handleWhatsAppClick}
-                className="bg-green-500 hover:bg-green-600 text-white text-lg px-8 py-6 animate-scale-in"
+                className="bg-green-500 hover:bg-green-600 text-white text-lg px-8 py-6 hover-scale glow-effect"
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Join WhatsApp Community
@@ -77,18 +81,18 @@ export const Hero = () => {
 
           {/* Right Content - Hero Image */}
           <div className="relative animate-slide-in-right">
-            <div className="relative bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl p-8 shadow-2xl hover-scale">
+            <div className="relative bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl p-8 shadow-2xl hover-scale glow-effect">
               <img 
                 src="https://i.postimg.cc/W19kpyNm/children-making-robot-23-2148863380.avif"
                 alt="Robotics Workspace"
                 className="w-full h-64 lg:h-80 object-cover rounded-lg"
               />
               
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 bg-white rounded-lg p-4 shadow-lg animate-bounce">
+              {/* Enhanced Floating Elements */}
+              <div className="absolute -top-4 -right-4 glass-effect rounded-lg p-4 shadow-lg animate-bounce">
                 <Bot className="w-8 h-8 text-blue-600" />
               </div>
-              <div className="absolute -bottom-4 -left-4 bg-white rounded-lg p-4 shadow-lg animate-bounce">
+              <div className="absolute -bottom-4 -left-4 glass-effect rounded-lg p-4 shadow-lg animate-bounce">
                 <Users className="w-8 h-8 text-cyan-500" />
               </div>
             </div>

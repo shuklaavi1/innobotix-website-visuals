@@ -66,21 +66,22 @@ Timeline: ${formData.timeline}
       {/* Hero Section */}
       <section className="py-20 px-4 animate-fade-in">
         <div className="max-w-4xl mx-auto text-center">
+          <div className="mb-8 animate-slide-in-up">
+            <p className="text-2xl font-light text-gray-500 italic mb-4">
+              "From your brain to reality—without lifting a soldering iron."
+            </p>
+          </div>
+          
           <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-slide-in-up">
             Have an Idea? 
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-              {" "}We'll Build It
+            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent block">
+              Let's Bring It to Life.
             </span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto animate-slide-in-up">
             Transform your robotics vision into reality with our custom build service. 
             From concept to completion, we bring your ideas to life.
           </p>
-          <div className="animate-scale-in">
-            <p className="text-2xl font-semibold text-blue-600 italic">
-              "From your brain to reality—without you lifting a soldering iron."
-            </p>
-          </div>
         </div>
       </section>
 
@@ -90,21 +91,23 @@ Timeline: ${formData.timeline}
       {/* Project Submission Form */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Submit Your Project Idea</h2>
-            <p className="text-gray-600">
+          <div className="text-center mb-12 animate-fade-in">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+              Submit Your Idea
+            </h2>
+            <p className="text-gray-600 text-lg">
               Tell us about your vision and we'll create a custom solution for you
             </p>
           </div>
 
-          <Card className="shadow-xl">
-            <CardHeader>
-              <CardTitle>Project Details</CardTitle>
-              <CardDescription>
+          <Card className="shadow-2xl border-0 hover-scale animate-scale-in">
+            <CardHeader className="bg-gradient-to-r from-blue-50 to-cyan-50">
+              <CardTitle className="text-2xl text-gray-900">Project Details</CardTitle>
+              <CardDescription className="text-lg">
                 Provide as much detail as possible to help us understand your requirements
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -118,6 +121,7 @@ Timeline: ${formData.timeline}
                       onChange={handleChange}
                       required
                       placeholder="Enter your full name"
+                      className="hover:border-blue-400 focus:border-blue-500 transition-colors"
                     />
                   </div>
                   <div>
@@ -132,6 +136,7 @@ Timeline: ${formData.timeline}
                       onChange={handleChange}
                       required
                       placeholder="your.email@example.com"
+                      className="hover:border-blue-400 focus:border-blue-500 transition-colors"
                     />
                   </div>
                 </div>
@@ -147,6 +152,7 @@ Timeline: ${formData.timeline}
                     onChange={handleChange}
                     required
                     placeholder="Give your project a descriptive title"
+                    className="hover:border-blue-400 focus:border-blue-500 transition-colors"
                   />
                 </div>
 
@@ -162,6 +168,7 @@ Timeline: ${formData.timeline}
                     required
                     rows={5}
                     placeholder="Describe your robotics project in detail. What should it do? What features do you need? Any specific requirements?"
+                    className="hover:border-blue-400 focus:border-blue-500 transition-colors"
                   />
                 </div>
 
@@ -176,6 +183,7 @@ Timeline: ${formData.timeline}
                       value={formData.budget}
                       onChange={handleChange}
                       placeholder="e.g., ₹10,000 - ₹50,000"
+                      className="hover:border-blue-400 focus:border-blue-500 transition-colors"
                     />
                   </div>
                   <div>
@@ -188,11 +196,15 @@ Timeline: ${formData.timeline}
                       value={formData.timeline}
                       onChange={handleChange}
                       placeholder="e.g., 2-3 weeks"
+                      className="hover:border-blue-400 focus:border-blue-500 transition-colors"
                     />
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg py-6">
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg py-6 hover-scale glow-effect"
+                >
                   Submit Project Idea
                 </Button>
               </form>
