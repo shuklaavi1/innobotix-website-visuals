@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { Book, Users, Youtube, Award, Certificate, Sparkles } from "lucide-react";
+import { Book, Users, Youtube, Award, CheckCircle, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const StarterKits = () => {
@@ -26,7 +26,7 @@ export const StarterKits = () => {
       description: "HD video tutorials included"
     },
     {
-      icon: <Certificate className="w-6 h-6" />,
+      icon: <CheckCircle className="w-6 h-6" />,
       title: "Get Certified",
       description: "Official completion certificate"
     }
