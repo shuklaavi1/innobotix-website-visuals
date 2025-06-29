@@ -1,13 +1,24 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { Book, Users, Youtube, Award, CheckCircle, Sparkles } from "lucide-react";
+import { Book, Users, Youtube, Award, CheckCircle, Sparkles, ChevronLeft, ChevronRight, Download } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const StarterKits = () => {
   const navigate = useNavigate();
+
+  const handleOrderNow = () => {
+    // Placeholder for Google Form - will be added later
+    console.log("Order Now clicked - Google Form to be integrated");
+    alert("Order form will be available soon! Please contact us via WhatsApp for now.");
+  };
+
+  const handleDownloadSample = () => {
+    // Placeholder for sample project download
+    console.log("Download Sample Project clicked");
+    alert("Sample project download will be available soon!");
+  };
 
   const features = [
     {
@@ -123,8 +134,12 @@ export const StarterKits = () => {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="text-white border-gray-600 hover:bg-gray-700 rounded-full w-12 h-12" />
-                <CarouselNext className="text-white border-gray-600 hover:bg-gray-700 rounded-full w-12 h-12" />
+                <CarouselPrevious className="text-white border-gray-600 hover:bg-gray-700 rounded-full w-12 h-12 flex items-center justify-center">
+                  <ChevronLeft className="w-6 h-6" />
+                </CarouselPrevious>
+                <CarouselNext className="text-white border-gray-600 hover:bg-gray-700 rounded-full w-12 h-12 flex items-center justify-center">
+                  <ChevronRight className="w-6 h-6" />
+                </CarouselNext>
               </Carousel>
               
               {/* Price Badge */}
@@ -174,10 +189,10 @@ export const StarterKits = () => {
             <div className="space-y-4">
               <Button 
                 size="lg"
-                onClick={() => navigate("/starter-kits")}
+                onClick={handleOrderNow}
                 className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg py-6 hover:scale-105 transition-all duration-300"
               >
-                Buy Now - ₹999
+                Order Now - ₹999
               </Button>
               <Button 
                 size="lg"
@@ -186,6 +201,14 @@ export const StarterKits = () => {
                 className="w-full border-blue-600 text-blue-400 hover:bg-blue-900/50 hover:text-white text-lg py-6 hover:scale-105 transition-all duration-300"
               >
                 Learn More
+              </Button>
+              <Button 
+                size="lg"
+                onClick={handleDownloadSample}
+                className="w-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-lg py-6 hover:scale-105 transition-all duration-300"
+              >
+                <Download className="w-5 h-5 mr-2" />
+                Download Sample Project
               </Button>
             </div>
           </div>
