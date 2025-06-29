@@ -64,17 +64,19 @@ const About = () => {
           </div>
           
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300">
+            <Card className="bg-gray-800/70 border-gray-600/50 backdrop-blur-md hover:scale-105 transition-all duration-300 overflow-hidden">
               <CardContent className="p-8">
                 <div className="grid md:grid-cols-3 gap-8 items-center">
                   <div className="md:col-span-1 text-center">
                     <div className="relative inline-block mb-4">
-                      <img 
-                        src="https://i.postimg.cc/bJ03pQ7H/1000108570.jpg"
-                        alt="Avi Mohan Shuklaa"
-                        className="w-48 h-48 object-cover rounded-full mx-auto shadow-2xl border-4 border-blue-400/50"
-                      />
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-400/20 to-cyan-300/20"></div>
+                      <div className="w-48 h-48 rounded-full overflow-hidden mx-auto shadow-2xl border-4 border-blue-400/70 bg-gray-900">
+                        <img 
+                          src="https://i.postimg.cc/bJ03pQ7H/1000108570.jpg"
+                          alt="Avi Mohan Shuklaa"
+                          className="w-full h-full object-cover brightness-110 contrast-110"
+                        />
+                      </div>
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-400/10 to-cyan-300/10"></div>
                     </div>
                     <Badge className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-4 py-2">
                       Founder & CEO
@@ -85,7 +87,7 @@ const About = () => {
                     <h3 className="text-3xl font-bold text-white mb-4">
                       Avi Mohan Shuklaa
                     </h3>
-                    <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                    <p className="text-lg text-gray-200 mb-6 leading-relaxed">
                       High school robotics innovator and visionary founder of Innobotix. 
                       Passionate about making cutting-edge robotics technology accessible 
                       to students and enthusiasts worldwide. With a deep understanding of 
@@ -94,15 +96,15 @@ const About = () => {
                     </p>
                     
                     <div className="space-y-3 mb-6">
-                      <div className="flex items-center text-gray-300">
+                      <div className="flex items-center text-gray-200">
                         <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
                         <span>Robotics & AI Enthusiast</span>
                       </div>
-                      <div className="flex items-center text-gray-300">
+                      <div className="flex items-center text-gray-200">
                         <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
                         <span>Educational Technology Advocate</span>
                       </div>
-                      <div className="flex items-center text-gray-300">
+                      <div className="flex items-center text-gray-200">
                         <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
                         <span>Innovation & Community Builder</span>
                       </div>
