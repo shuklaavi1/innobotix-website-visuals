@@ -2,142 +2,175 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Bot, Book, ExternalLink } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ExternalLink, Award, Users, Lightbulb, Target } from "lucide-react";
 
 const About = () => {
-  const stats = [
-    { number: "100+", label: "Students Trained", icon: <Users className="w-8 h-8" /> },
-    { number: "15+", label: "Projects Built", icon: <Bot className="w-8 h-8" /> },
-    { number: "2+", label: "Years Experience", icon: <Book className="w-8 h-8" /> }
+  const values = [
+    {
+      icon: <Lightbulb className="w-8 h-8" />,
+      title: "Innovation First",
+      description: "We believe in pushing the boundaries of what's possible with robotics technology"
+    },
+    {
+      icon: <Users className="w-8 h-8" />,
+      title: "Community Driven",
+      description: "Building a supportive community of makers, learners, and innovators"
+    },
+    {
+      icon: <Award className="w-8 h-8" />,
+      title: "Quality Education",
+      description: "Providing hands-on learning experiences that inspire and educate"
+    },
+    {
+      icon: <Target className="w-8 h-8" />,
+      title: "Accessible Learning",
+      description: "Making robotics education affordable and accessible to everyone"
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black relative overflow-hidden">
+      {/* Tech Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-20 w-64 h-64 border border-white rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-32 w-32 h-32 border border-white rounded-lg rotate-45 animate-bounce"></div>
+        <div className="absolute bottom-32 left-1/3 w-48 h-48 border-2 border-dotted border-white rounded-full animate-spin-slow"></div>
+        <div className="absolute bottom-20 right-1/4 w-24 h-24 border border-white rotate-12 animate-pulse"></div>
+      </div>
+
       <Navigation />
       
       {/* Hero Section */}
-      <section className="py-20 animate-fade-in">
+      <section className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h1 className="text-5xl font-bold text-gray-900 mb-6 animate-slide-in-up">
-              Passion-led
-              <span className="block text-blue-600">Innovation</span>
+            <h1 className="text-5xl font-bold text-white mb-6">
+              About <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Innobotix</span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto animate-slide-in-up">
-              Our mission is to democratize robotics education in India, making cutting-edge technology accessible to every student.
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Empowering the next generation of innovators through hands-on robotics education 
+              and cutting-edge technology solutions.
             </p>
-          </div>
-
-          {/* Meet the Founder Section */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-20 animate-fade-in-up">
-            <div className="relative animate-slide-in-left">
-              <Card className="overflow-hidden border-0 shadow-2xl hover-scale">
-                <CardContent className="p-0">
-                  <img 
-                    src="https://i.postimg.cc/bJ03pQ7H/1000108570.jpg"
-                    alt="Avi Mohan Shuklaa - Founder of Innobotix"
-                    className="w-full h-96 object-cover"
-                  />
-                  <div className="absolute bottom-6 left-6 right-6 glass-effect rounded-lg p-4 shadow-lg">
-                    <h3 className="font-semibold text-white mb-1">Meet the Founder</h3>
-                    <p className="text-sm text-blue-100">Building the future of robotics education</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="animate-slide-in-right">
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Meet the Founder</h2>
-              <div className="space-y-6 text-gray-600">
-                <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 rounded-lg border-l-4 border-blue-500">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Avi Mohan Shuklaa</h3>
-                  <p className="text-lg text-blue-700 mb-4">High school robotics innovator and founder of Innobotix</p>
-                  <a 
-                    href="https://www.avishuklaa.in" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-medium transition-colors hover-scale"
-                  >
-                    <span>Visit Personal Website</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
-                <p>
-                  Started as a college project, Innobotix was born from a simple observation: 
-                  robotics education in India was too expensive and complex for most students.
-                </p>
-                <p>
-                  As an engineering student, I struggled to find affordable, comprehensive robotics kits 
-                  that didn't require extensive prior knowledge. Most available options were either 
-                  too basic or prohibitively expensive.
-                </p>
-                <p>
-                  That's when I decided to create something different - a complete ecosystem that combines 
-                  high-quality hardware, comprehensive learning materials, and ongoing mentor support, 
-                  all at an affordable price.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-white">
+      {/* Meet the Founder Section */}
+      <section className="py-20 bg-gradient-to-r from-gray-800/30 to-blue-900/20 backdrop-blur-sm relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center text-gray-900 mb-16 animate-fade-in">
-            Our Impact
-          </h2>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-4">Meet the Founder</h2>
+          </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            {stats.map((stat, index) => (
-              <Card key={index} className="text-center border-blue-100 hover:shadow-xl transition-all duration-300 hover-scale animate-scale-in">
-                <CardContent className="p-8">
-                  <div className="text-blue-600 mb-4 flex justify-center glow-effect">
-                    {stat.icon}
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="grid md:grid-cols-3 gap-8 items-center">
+                  <div className="md:col-span-1 text-center">
+                    <div className="relative inline-block mb-4">
+                      <img 
+                        src="https://i.postimg.cc/bJ03pQ7H/1000108570.jpg"
+                        alt="Avi Mohan Shuklaa"
+                        className="w-48 h-48 object-cover rounded-full mx-auto shadow-2xl border-4 border-blue-400/50"
+                      />
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-400/20 to-cyan-300/20"></div>
+                    </div>
+                    <Badge className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-4 py-2">
+                      Founder & CEO
+                    </Badge>
                   </div>
-                  <div className="text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                  <div className="text-gray-600">{stat.label}</div>
+                  
+                  <div className="md:col-span-2">
+                    <h3 className="text-3xl font-bold text-white mb-4">
+                      Avi Mohan Shuklaa
+                    </h3>
+                    <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                      High school robotics innovator and visionary founder of Innobotix. 
+                      Passionate about making cutting-edge robotics technology accessible 
+                      to students and enthusiasts worldwide. With a deep understanding of 
+                      both technology and education, Avi is dedicated to bridging the gap 
+                      between complex robotics concepts and practical, hands-on learning.
+                    </p>
+                    
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-center text-gray-300">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                        <span>Robotics & AI Enthusiast</span>
+                      </div>
+                      <div className="flex items-center text-gray-300">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                        <span>Educational Technology Advocate</span>
+                      </div>
+                      <div className="flex items-center text-gray-300">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                        <span>Innovation & Community Builder</span>
+                      </div>
+                    </div>
+                    
+                    <a 
+                      href="https://www.avishuklaa.in" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
+                    >
+                      Visit Portfolio
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </a>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Vision */}
+      <section className="py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12">
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300">
+              <CardContent className="p-8">
+                <h3 className="text-3xl font-bold text-white mb-6">Our Mission</h3>
+                <p className="text-gray-300 text-lg leading-relaxed">
+                  To democratize robotics education by providing accessible, high-quality learning 
+                  experiences that inspire creativity, foster innovation, and prepare the next 
+                  generation for a technology-driven future.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300">
+              <CardContent className="p-8">
+                <h3 className="text-3xl font-bold text-white mb-6">Our Vision</h3>
+                <p className="text-gray-300 text-lg leading-relaxed">
+                  To become the leading platform for robotics education globally, creating a 
+                  community where learners of all backgrounds can explore, create, and innovate 
+                  with confidence in the field of robotics and AI.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-20 bg-gradient-to-r from-gray-800/30 to-blue-900/20 backdrop-blur-sm relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center text-white mb-16">Our Values</h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {values.map((value, index) => (
+              <Card key={index} className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300 text-center">
+                <CardContent className="p-6">
+                  <div className="text-blue-400 mb-4 flex justify-center">
+                    {value.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">{value.title}</h3>
+                  <p className="text-gray-400">{value.description}</p>
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Mission Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-            <h2 className="text-4xl font-bold text-gray-900 mb-8">Our Mission</h2>
-            <p className="text-xl text-gray-600 leading-relaxed mb-8">
-              To democratize robotics education by providing affordable, comprehensive learning solutions 
-              that empower students to build, learn, and innovate without barriers.
-            </p>
-            
-            <div className="grid md:grid-cols-3 gap-8 mt-12">
-              <div className="text-center hover-scale">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4 glow-effect">
-                  <span className="text-white font-bold text-xl">$</span>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Accessibility</h3>
-                <p className="text-gray-600">Making robotics affordable for every student</p>
-              </div>
-              <div className="text-center hover-scale">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 glow-effect">
-                  <span className="text-white font-bold text-xl">★</span>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Quality</h3>
-                <p className="text-gray-600">Premium components and comprehensive guides</p>
-              </div>
-              <div className="text-center hover-scale">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 glow-effect">
-                  <span className="text-white font-bold text-xl">♥</span>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Support</h3>
-                <p className="text-gray-600">Ongoing mentorship and community help</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>

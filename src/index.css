@@ -114,6 +114,10 @@
     animation: fadeInUp 0.7s ease-out forwards;
   }
   
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+  
   .hover-scale {
     transition: transform 0.3s ease;
   }
@@ -130,6 +134,20 @@
   
   .glow-effect {
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+  
+  .tech-grid {
+    background-image: 
+      radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.1) 2px, transparent 0),
+      radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.1) 2px, transparent 0);
+    background-size: 100px 100px;
+  }
+  
+  .circuit-pattern {
+    background-image: 
+      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 }
 
@@ -191,4 +209,15 @@
     opacity: 1; 
     transform: translateY(0); 
   }
+}
+
+/* Shake animation for certification button */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+.animate-shake {
+  animation: shake 0.6s ease-in-out;
 }
