@@ -122,6 +122,10 @@
     animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
   
+  .animate-pulse-slower {
+    animation: pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
   .hover-scale {
     transition: transform 0.3s ease;
   }
