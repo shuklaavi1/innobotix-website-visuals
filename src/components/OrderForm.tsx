@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -65,8 +65,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
       formSubmitData.append('kit', formData.kitSelection);
       formSubmitData.append('quantity', formData.quantity.toString());
       
-      // Replace with your actual email
-      const response = await fetch('https://formsubmit.co/your-email@example.com', {
+      // Updated email address
+      const response = await fetch('https://formsubmit.co/hustlewithavi1@gmail.com', {
         method: 'POST',
         body: formSubmitData
       });
@@ -110,15 +110,18 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md mx-auto bg-white rounded-2xl shadow-2xl border-0 p-0 overflow-hidden">
-        {/* Header */}
+        {/* Header with single close button */}
         <DialogHeader className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white p-6 relative">
           <DialogTitle className="text-2xl font-bold flex items-center gap-2">
             <ShoppingCart className="w-6 h-6" />
             Order Your Kit
           </DialogTitle>
-          <DialogClose className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-1 transition-colors">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 transition-colors"
+          >
             <X className="w-5 h-5" />
-          </DialogClose>
+          </button>
         </DialogHeader>
 
         {/* Form Content */}
