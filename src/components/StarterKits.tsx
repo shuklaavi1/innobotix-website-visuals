@@ -194,7 +194,7 @@ export const StarterKits = () => {
                   onClick={handleOrderNow}
                   className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg py-6 hover:scale-105 transition-all duration-300"
                 >
-                  Order Now - ₹900
+                  Pre-Book Now - ₹900
                 </Button>
                 <Button 
                   size="lg"

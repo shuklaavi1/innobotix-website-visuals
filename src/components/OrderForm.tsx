@@ -73,8 +73,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
 
       if (response.ok) {
         toast({
-          title: "Order Submitted Successfully! 🎉",
-          description: "Thank you for your order! We'll contact you soon via WhatsApp.",
+          title: "Pre-booking Confirmed! 🎉",
+          description: "Thank you for pre-booking! Your kit will be delivered within 7–10 days of payment confirmation.",
         });
         
         // Reset form
@@ -94,8 +94,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
     } catch (error) {
       // For now, show success message as FormSubmit requires email verification
       toast({
-        title: "Order Received! 📝",
-        description: "Your order details have been saved. We'll process it shortly!",
+        title: "Pre-booking Received! 📝",
+        description: "Your pre-booking details have been saved. Your kit will be delivered within 7–10 days of payment confirmation.",
       });
       onClose();
     } finally {
@@ -114,7 +114,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
         <DialogHeader className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white p-6 relative">
           <DialogTitle className="text-2xl font-bold flex items-center gap-2">
             <ShoppingCart className="w-6 h-6" />
-            Order Your Kit
+            Pre-Book Your Kit
           </DialogTitle>
           <button
             onClick={onClose}
@@ -124,8 +124,17 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
           </button>
         </DialogHeader>
 
+        {/* Pre-booking Notice */}
+        <div className="px-6 pt-4">
+          <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4">
+            <p className="text-orange-700 font-bold text-sm">
+              📦 This is a pre-booking. Orders will be delivered within 7–10 days after successful payment.
+            </p>
+          </div>
+        </div>
+
         {/* Form Content */}
-        <div className="p-6 space-y-4 max-h-96 overflow-y-auto">
+        <div className="px-6 pb-6 space-y-4 max-h-96 overflow-y-auto">
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Full Name */}
             <div>
@@ -244,7 +253,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
               disabled={isSubmitting}
               className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold py-3 rounded-lg text-lg transition-all duration-300 hover:scale-105"
             >
-              {isSubmitting ? "Processing..." : "Place Order Now"}
+              {isSubmitting ? "Processing..." : "Pre-Book Now"}
             </Button>
           </form>
         </div>
@@ -252,7 +261,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
         {/* Footer Note */}
         <div className="bg-gray-50 px-6 py-3 border-t">
           <p className="text-xs text-gray-500 text-center">
-            Secure ordering • Free shipping • 24/7 support
+            Secure pre-booking • Delivery within 7-10 days • 24/7 support
           </p>
         </div>
       </DialogContent>
