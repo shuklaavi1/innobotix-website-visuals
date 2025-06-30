@@ -1,4 +1,3 @@
-
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -56,7 +55,57 @@ const About = () => {
         </div>
       </section>
 
-      {/* Meet the Founder Section */}
+      {/* Mission & Vision */}
+      <section className="py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12">
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300">
+              <CardContent className="p-8">
+                <h3 className="text-3xl font-bold text-white mb-6">Our Mission</h3>
+                <p className="text-gray-300 text-lg leading-relaxed">
+                  To democratize robotics education by providing accessible, high-quality learning 
+                  experiences that inspire creativity, foster innovation, and prepare the next 
+                  generation for a technology-driven future.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300">
+              <CardContent className="p-8">
+                <h3 className="text-3xl font-bold text-white mb-6">Our Vision</h3>
+                <p className="text-gray-300 text-lg leading-relaxed">
+                  To become the leading platform for robotics education globally, creating a 
+                  community where learners of all backgrounds can explore, create, and innovate 
+                  with confidence in the field of robotics and AI.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-20 bg-gradient-to-r from-gray-800/30 to-blue-900/20 backdrop-blur-sm relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center text-white mb-16">Our Values</h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {values.map((value, index) => (
+              <Card key={index} className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300 text-center">
+                <CardContent className="p-6">
+                  <div className="text-blue-400 mb-4 flex justify-center">
+                    {value.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">{value.title}</h3>
+                  <p className="text-gray-400">{value.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Meet the Founder Section - Moved to bottom */}
       <section className="py-20 bg-gradient-to-r from-gray-800/30 to-blue-900/20 backdrop-blur-sm relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -123,56 +172,6 @@ const About = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Mission & Vision */}
-      <section className="py-20 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12">
-            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300">
-              <CardContent className="p-8">
-                <h3 className="text-3xl font-bold text-white mb-6">Our Mission</h3>
-                <p className="text-gray-300 text-lg leading-relaxed">
-                  To democratize robotics education by providing accessible, high-quality learning 
-                  experiences that inspire creativity, foster innovation, and prepare the next 
-                  generation for a technology-driven future.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300">
-              <CardContent className="p-8">
-                <h3 className="text-3xl font-bold text-white mb-6">Our Vision</h3>
-                <p className="text-gray-300 text-lg leading-relaxed">
-                  To become the leading platform for robotics education globally, creating a 
-                  community where learners of all backgrounds can explore, create, and innovate 
-                  with confidence in the field of robotics and AI.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-20 bg-gradient-to-r from-gray-800/30 to-blue-900/20 backdrop-blur-sm relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center text-white mb-16">Our Values</h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <Card key={index} className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:scale-105 transition-all duration-300 text-center">
-                <CardContent className="p-6">
-                  <div className="text-blue-400 mb-4 flex justify-center">
-                    {value.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3">{value.title}</h3>
-                  <p className="text-gray-400">{value.description}</p>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </div>
       </section>
