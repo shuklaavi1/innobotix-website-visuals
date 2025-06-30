@@ -1,3 +1,4 @@
+
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -154,53 +155,52 @@ const About = () => {
                         </div>
                         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-400/10 to-cyan-300/10"></div>
                       </div>
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-400/10 to-cyan-300/10"></div>
-                    </div>
-                    <Badge className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-4 py-2">
-                      Founder & CEO
-                    </Badge>
-                  </div>
-                  
-                  <div className="md:col-span-2">
-                    <h3 className="text-3xl font-bold text-white mb-4">
-                      Avi Mohan Shuklaa
-                    </h3>
-                    <p className="text-lg text-gray-200 mb-6 leading-relaxed">
-                      High school robotics innovator and visionary founder of Innobotix. 
-                      Passionate about making cutting-edge robotics technology accessible 
-                      to students and enthusiasts worldwide. With a deep understanding of 
-                      both technology and education, Avi is dedicated to bridging the gap 
-                      between complex robotics concepts and practical, hands-on learning.
-                    </p>
-                    
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center text-gray-200">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
-                        <span>Robotics & AI Enthusiast</span>
-                      </div>
-                      <div className="flex items-center text-gray-200">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
-                        <span>Educational Technology Advocate</span>
-                      </div>
-                      <div className="flex items-center text-gray-200">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
-                        <span>Innovation & Community Builder</span>
-                      </div>
+                      <Badge className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-4 py-2">
+                        Founder & CEO
+                      </Badge>
                     </div>
                     
-                    <a 
-                      href="https://www.avishuklaa.in" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
-                    >
-                      Visit Portfolio
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </a>
+                    <div className="md:col-span-2">
+                      <h3 className="text-3xl font-bold text-white mb-4">
+                        Avi Mohan Shuklaa
+                      </h3>
+                      <p className="text-lg text-gray-200 mb-6 leading-relaxed">
+                        High school robotics innovator and visionary founder of Innobotix. 
+                        Passionate about making cutting-edge robotics technology accessible 
+                        to students and enthusiasts worldwide. With a deep understanding of 
+                        both technology and education, Avi is dedicated to bridging the gap 
+                        between complex robotics concepts and practical, hands-on learning.
+                      </p>
+                      
+                      <div className="space-y-3 mb-6">
+                        <div className="flex items-center text-gray-200">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                          <span>Robotics & AI Enthusiast</span>
+                        </div>
+                        <div className="flex items-center text-gray-200">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                          <span>Educational Technology Advocate</span>
+                        </div>
+                        <div className="flex items-center text-gray-200">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                          <span>Innovation & Community Builder</span>
+                        </div>
+                      </div>
+                      
+                      <a 
+                        href="https://www.avishuklaa.in" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
+                      >
+                        Visit Portfolio
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </a>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </section>
 
