@@ -186,18 +186,22 @@ const StarterKits = () => {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
-                  <CardHeader>
+                <Card 
+                  key={index} 
+                  className="group cursor-pointer bg-gray-800/50 border-gray-700/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 hover:border-blue-500/30 active:scale-95 active:shadow-lg"
+                >
+                  <CardHeader className="relative">
+                    <div className="absolute top-2 right-2 w-3 h-3 bg-gradient-to-br from-blue-400 to-cyan-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg shadow-blue-400/50"></div>
                     <div className="flex justify-between items-start mb-2">
-                      <CardTitle className="text-lg text-white">{project.title}</CardTitle>
+                      <CardTitle className="text-lg text-white group-hover:text-blue-100 transition-colors duration-300">{project.title}</CardTitle>
                       <Badge variant={project.difficulty === 'Beginner' ? 'secondary' : project.difficulty === 'Intermediate' ? 'default' : 'destructive'}>
                         {project.difficulty}
                       </Badge>
                     </div>
-                    <p className="text-gray-300">{project.description}</p>
+                    <p className="text-gray-300 group-hover:text-gray-200 transition-colors duration-300">{project.description}</p>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center text-sm text-gray-400">
+                    <div className="flex items-center text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
                       <span>⏱️ {project.time}</span>
                     </div>
                   </CardContent>
