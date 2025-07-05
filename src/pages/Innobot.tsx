@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Bot, Send, User, Loader2 } from "lucide-react";
+import { Send, User, Loader2 } from "lucide-react";
 
 interface Message {
   id: string;
@@ -24,17 +24,8 @@ const Innobot = () => {
   ]);
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [questionCount, setQuestionCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  // Load question count from localStorage on component mount
-  useEffect(() => {
-    const savedCount = localStorage.getItem('innobotQuestionCount');
-    if (savedCount) {
-      setQuestionCount(parseInt(savedCount, 10));
-    }
-  }, []);
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
@@ -43,12 +34,6 @@ const Innobot = () => {
 
   const handleSendMessage = async () => {
     if (!inputText.trim() || isLoading) return;
-
-    // Check question limit
-    if (questionCount >= 5) {
-      alert("🚫 Free limit reached! Sign in to continue.");
-      return;
-    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -62,8 +47,8 @@ const Innobot = () => {
     setIsLoading(true);
 
     try {
-      // Call Gemini Pro API
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyA5W6cpU5fEqQbjp1Or0R6snHwIHwKrj2k`, {
+      // Call Gemini 1.5 Flash API with correct endpoint
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyA5W6cpU5fEqQbjp1Or0R6snHwIHwKrj2k`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,11 +62,15 @@ const Innobot = () => {
         })
       });
 
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+      }
+
       const data = await response.json();
       
       let aiResponse = "I'm having trouble processing your request right now. Please try again later.";
       
-      if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+      if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
         aiResponse = data.candidates[0].content.parts[0].text;
       }
 
@@ -93,11 +82,6 @@ const Innobot = () => {
       };
 
       setMessages(prev => [...prev, aiMessage]);
-      
-      // Increment and save question count
-      const newCount = questionCount + 1;
-      setQuestionCount(newCount);
-      localStorage.setItem('innobotQuestionCount', newCount.toString());
 
     } catch (error) {
       console.error('Error calling Gemini API:', error);
@@ -120,10 +104,8 @@ const Innobot = () => {
     }
   };
 
-  const isAtLimit = questionCount >= 5;
-
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-white font-['Poppins',sans-serif] flex flex-col">
+    <div className="min-h-screen bg-[#0d0d0d] text-white font-['Space_Grotesk',sans-serif] flex flex-col">
       <Navigation />
       
       {/* Beta Banner - Sticky */}
@@ -139,22 +121,12 @@ const Innobot = () => {
       <div className="flex-1 flex flex-col">
         {/* Header Section */}
         <div className="text-center py-8 px-4">
-          <div className="flex items-center justify-center mb-6">
-            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center shadow-2xl shadow-blue-500/50 animate-pulse">
-              <Bot className="w-10 h-10 text-white" />
-            </div>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent mb-4 animate-fade-in">
-            🤖 Innobot – Your Robotics AI Assistant (Beta)
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent mb-6 animate-fade-in">
+            Innobot – Your Robotics AI Assistant
           </h1>
-          <p className="text-xl text-gray-300 mb-4 animate-fade-in">
+          <p className="text-xl md:text-2xl text-gray-300 mb-4 animate-fade-in font-light">
             Ask me anything about Arduino, circuits, robotics, and more!
           </p>
-          <div className="inline-flex items-center px-4 py-2 bg-blue-500/20 border border-blue-400/30 rounded-full backdrop-blur-sm">
-            <span className="text-cyan-400 text-sm font-medium">
-              Questions remaining: {5 - questionCount}/5
-            </span>
-          </div>
         </div>
 
         {/* Chat Window */}
@@ -174,7 +146,7 @@ const Innobot = () => {
                         ? 'bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg shadow-blue-500/50' 
                         : 'bg-gradient-to-r from-cyan-500 to-blue-500 shadow-lg shadow-cyan-500/50'
                     }`}>
-                      {message.isUser ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
+                      {message.isUser ? <User className="w-5 h-5" /> : <span className="text-white font-bold">AI</span>}
                     </div>
                     <div className={`rounded-2xl p-4 backdrop-blur-sm shadow-lg ${
                       message.isUser 
@@ -195,7 +167,7 @@ const Innobot = () => {
                 <div className="flex justify-start animate-fade-in">
                   <div className="flex items-start space-x-4 max-w-[85%]">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 shadow-lg shadow-cyan-500/50">
-                      <Bot className="w-5 h-5" />
+                      <span className="text-white font-bold">AI</span>
                     </div>
                     <div className="bg-gray-800/80 text-gray-100 border border-gray-600/30 rounded-2xl p-4 backdrop-blur-sm shadow-lg">
                       <div className="flex items-center space-x-2">
@@ -220,44 +192,33 @@ const Innobot = () => {
       {/* Fixed Input Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-[#0d0d0d]/95 backdrop-blur-xl border-t border-gray-700/50 p-4 z-50">
         <div className="max-w-4xl mx-auto">
-          {isAtLimit ? (
-            <div className="text-center py-6">
-              <div className="inline-flex items-center px-6 py-3 bg-red-500/20 border border-red-400/30 rounded-2xl backdrop-blur-sm mb-4">
-                <span className="text-red-400 font-medium">🚫 Free limit reached! Sign in to continue.</span>
-              </div>
-              <Button disabled className="bg-gray-600/50 cursor-not-allowed rounded-xl px-8 py-3">
-                Ask Innobot
-              </Button>
+          <div className="flex space-x-4 items-end">
+            <div className="flex-1">
+              <Textarea
+                ref={textareaRef}
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Ask me about Arduino, robotics, circuits..."
+                className="bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 resize-none min-h-[60px] max-h-[120px] backdrop-blur-sm rounded-2xl border-2 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                disabled={isLoading}
+              />
             </div>
-          ) : (
-            <div className="flex space-x-4 items-end">
-              <div className="flex-1">
-                <Textarea
-                  ref={textareaRef}
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Ask me about Arduino, robotics, circuits..."
-                  className="bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 resize-none min-h-[60px] max-h-[120px] backdrop-blur-sm rounded-2xl border-2 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
-                  disabled={isLoading}
-                />
-              </div>
-              <Button
-                onClick={handleSendMessage}
-                disabled={!inputText.trim() || isLoading}
-                className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-2xl shadow-blue-500/50 px-8 py-4 rounded-2xl h-[60px] transition-all hover:scale-105 disabled:hover:scale-100"
-              >
-                {isLoading ? (
-                  <Loader2 className="w-6 h-6 animate-spin" />
-                ) : (
-                  <>
-                    <Send className="w-5 h-5 mr-2" />
-                    Ask Innobot
-                  </>
-                )}
-              </Button>
-            </div>
-          )}
+            <Button
+              onClick={handleSendMessage}
+              disabled={!inputText.trim() || isLoading}
+              className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-2xl shadow-blue-500/50 px-8 py-4 rounded-2xl h-[60px] transition-all hover:scale-105 disabled:hover:scale-100"
+            >
+              {isLoading ? (
+                <Loader2 className="w-6 h-6 animate-spin" />
+              ) : (
+                <>
+                  <Send className="w-5 h-5 mr-2" />
+                  Ask Innobot
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       </div>
 
