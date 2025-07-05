@@ -1,14 +1,10 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Bot, Users, MessageCircle } from "lucide-react";
+import { ArrowDown, Bot, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
   const navigate = useNavigate();
-
-  const handleWhatsAppClick = () => {
-    window.open("https://chat.whatsapp.com/your-group-link", "_blank");
-  };
 
   return (
     <section className="relative overflow-hidden py-20 lg:py-32 animate-fade-in">
@@ -50,15 +46,15 @@ export const Hero = () => {
               </Button>
             </div>
 
-            {/* WhatsApp Community Button */}
+            {/* Ask Innobot AI Button */}
             <div className="mt-6 animate-fade-in-up">
               <Button 
                 size="lg"
-                onClick={handleWhatsAppClick}
-                className="bg-green-500 hover:bg-green-600 text-white text-lg px-8 py-6 hover-scale glow-effect"
+                onClick={() => navigate("/innobot")}
+                className="bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white text-lg px-8 py-6 hover-scale glow-effect"
               >
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Join WhatsApp Community
+                <Bot className="w-5 h-5 mr-2" />
+                Ask Innobot AI
               </Button>
             </div>
 
@@ -74,7 +70,7 @@ export const Hero = () => {
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-3xl font-bold text-blue-600">24/7</div>
-                <div className="text-sm text-gray-600">Community Support</div>
+                <div className="text-sm text-gray-600">AI Assistant</div>
               </div>
             </div>
           </div>

@@ -8,10 +8,6 @@ export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleWhatsAppClick = () => {
-    window.open("https://chat.whatsapp.com/your-group-link", "_blank");
-  };
-
   const navItems = [
     { name: "Home", action: () => navigate("/") },
     { name: "Starter Kits", action: () => navigate("/starter-kits") },
@@ -54,13 +50,6 @@ export const Navigation = () => {
             >
               Get Started
             </Button>
-            <Button 
-              onClick={handleWhatsAppClick}
-              size="sm"
-              className="bg-green-500 hover:bg-green-600"
-            >
-              WhatsApp
-            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -90,15 +79,6 @@ export const Navigation = () => {
                 {item.name}
               </button>
             ))}
-            <button
-              onClick={() => {
-                handleWhatsAppClick();
-                setIsOpen(false);
-              }}
-              className="block w-full text-left px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-            >
-              Join WhatsApp
-            </button>
             <div className="px-4 pt-2">
               <Button 
                 onClick={() => {
