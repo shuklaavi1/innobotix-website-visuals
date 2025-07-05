@@ -123,123 +123,141 @@ const Innobot = () => {
   const isAtLimit = questionCount >= 5;
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-white">
+    <div className="min-h-screen bg-[#0d0d0d] text-white font-['Poppins',sans-serif] flex flex-col">
       <Navigation />
       
-      {/* Beta Banner */}
-      <div className="bg-gradient-to-r from-orange-600/20 to-yellow-600/20 border-b border-orange-500/30 py-2">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <span className="text-orange-300 text-sm font-medium">
+      {/* Beta Banner - Sticky */}
+      <div className="sticky top-16 z-40 bg-gradient-to-r from-orange-600/20 to-yellow-600/20 border-b border-orange-500/30 py-3 backdrop-blur-md">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <span className="text-orange-300 text-sm font-medium animate-pulse">
             🧪 Beta Version – This is an early test release. Help us improve!
           </span>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 h-[calc(100vh-200px)] flex flex-col">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/50">
-              <Bot className="w-8 h-8 text-white" />
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        {/* Header Section */}
+        <div className="text-center py-8 px-4">
+          <div className="flex items-center justify-center mb-6">
+            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center shadow-2xl shadow-blue-500/50 animate-pulse">
+              <Bot className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent mb-2">
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent mb-4 animate-fade-in">
             🤖 Innobot – Your Robotics AI Assistant (Beta)
           </h1>
-          <p className="text-gray-400">
+          <p className="text-xl text-gray-300 mb-4 animate-fade-in">
             Ask me anything about Arduino, circuits, robotics, and more!
           </p>
-          <div className="mt-2 text-sm text-cyan-400">
-            Questions remaining: {5 - questionCount}/5
+          <div className="inline-flex items-center px-4 py-2 bg-blue-500/20 border border-blue-400/30 rounded-full backdrop-blur-sm">
+            <span className="text-cyan-400 text-sm font-medium">
+              Questions remaining: {5 - questionCount}/5
+            </span>
           </div>
         </div>
 
         {/* Chat Window */}
-        <div className="flex-1 bg-gray-900/50 rounded-lg border border-gray-700/50 backdrop-blur-sm overflow-hidden flex flex-col">
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[400px]">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-              >
-                <div className={`flex items-start space-x-3 max-w-[80%] ${message.isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    message.isUser 
-                      ? 'bg-blue-600' 
-                      : 'bg-gradient-to-r from-cyan-500 to-blue-500'
-                  }`}>
-                    {message.isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
-                  </div>
-                  <div className={`rounded-lg p-3 ${
-                    message.isUser 
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-gray-800 text-gray-100 border border-gray-700'
-                  }`}>
-                    <p className="whitespace-pre-wrap">{message.text}</p>
-                    <div className="text-xs opacity-70 mt-1">
-                      {message.timestamp.toLocaleTimeString()}
+        <div className="flex-1 max-w-4xl mx-auto w-full px-4 pb-32">
+          <div className="bg-gray-900/40 backdrop-blur-xl rounded-2xl border border-gray-700/50 shadow-2xl shadow-blue-500/10 h-[500px] md:h-[600px] flex flex-col">
+            {/* Chat Messages */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+              {messages.map((message, index) => (
+                <div
+                  key={message.id}
+                  className={`flex animate-fade-in ${message.isUser ? 'justify-end' : 'justify-start'}`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className={`flex items-start space-x-4 max-w-[85%] ${message.isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      message.isUser 
+                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg shadow-blue-500/50' 
+                        : 'bg-gradient-to-r from-cyan-500 to-blue-500 shadow-lg shadow-cyan-500/50'
+                    }`}>
+                      {message.isUser ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
+                    </div>
+                    <div className={`rounded-2xl p-4 backdrop-blur-sm shadow-lg ${
+                      message.isUser 
+                        ? 'bg-gradient-to-r from-blue-600/80 to-purple-600/80 text-white border border-blue-400/30 shadow-blue-500/20' 
+                        : 'bg-gray-800/80 text-gray-100 border border-gray-600/30 shadow-gray-900/50'
+                    }`}>
+                      <p className="whitespace-pre-wrap leading-relaxed">{message.text}</p>
+                      <div className="text-xs opacity-60 mt-2 font-mono">
+                        {message.timestamp.toLocaleTimeString()}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-            
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="flex items-start space-x-3 max-w-[80%]">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500">
-                    <Bot className="w-4 h-4" />
-                  </div>
-                  <div className="bg-gray-800 text-gray-100 border border-gray-700 rounded-lg p-3">
-                    <div className="flex items-center space-x-2">
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Thinking...</span>
+              ))}
+              
+              {/* Loading Animation */}
+              {isLoading && (
+                <div className="flex justify-start animate-fade-in">
+                  <div className="flex items-start space-x-4 max-w-[85%]">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 shadow-lg shadow-cyan-500/50">
+                      <Bot className="w-5 h-5" />
+                    </div>
+                    <div className="bg-gray-800/80 text-gray-100 border border-gray-600/30 rounded-2xl p-4 backdrop-blur-sm shadow-lg">
+                      <div className="flex items-center space-x-2">
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                          <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        </div>
+                        <span className="text-sm text-gray-300">Thinking...</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
-            
-            <div ref={messagesEndRef} />
+              )}
+              
+              <div ref={messagesEndRef} />
+            </div>
           </div>
+        </div>
+      </div>
 
-          {/* Input Area */}
-          <div className="p-4 border-t border-gray-700/50">
-            {isAtLimit ? (
-              <div className="text-center py-4">
-                <p className="text-red-400 mb-4">🚫 Free limit reached! Sign in to continue.</p>
-                <Button disabled className="bg-gray-600 cursor-not-allowed">
-                  Ask Innobot
-                </Button>
+      {/* Fixed Input Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-[#0d0d0d]/95 backdrop-blur-xl border-t border-gray-700/50 p-4 z-50">
+        <div className="max-w-4xl mx-auto">
+          {isAtLimit ? (
+            <div className="text-center py-6">
+              <div className="inline-flex items-center px-6 py-3 bg-red-500/20 border border-red-400/30 rounded-2xl backdrop-blur-sm mb-4">
+                <span className="text-red-400 font-medium">🚫 Free limit reached! Sign in to continue.</span>
               </div>
-            ) : (
-              <div className="flex space-x-3">
+              <Button disabled className="bg-gray-600/50 cursor-not-allowed rounded-xl px-8 py-3">
+                Ask Innobot
+              </Button>
+            </div>
+          ) : (
+            <div className="flex space-x-4 items-end">
+              <div className="flex-1">
                 <Textarea
                   ref={textareaRef}
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Ask me about Arduino, circuits, robotics..."
-                  className="flex-1 bg-gray-800 border-gray-600 text-white placeholder-gray-400 resize-none min-h-[50px] max-h-[120px]"
+                  placeholder="Ask me about Arduino, robotics, circuits..."
+                  className="bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 resize-none min-h-[60px] max-h-[120px] backdrop-blur-sm rounded-2xl border-2 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
                   disabled={isLoading}
                 />
-                <Button
-                  onClick={handleSendMessage}
-                  disabled={!inputText.trim() || isLoading}
-                  className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-lg shadow-blue-500/25 px-6"
-                >
-                  {isLoading ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5 mr-2" />
-                      Ask Innobot
-                    </>
-                  )}
-                </Button>
               </div>
-            )}
-          </div>
+              <Button
+                onClick={handleSendMessage}
+                disabled={!inputText.trim() || isLoading}
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-2xl shadow-blue-500/50 px-8 py-4 rounded-2xl h-[60px] transition-all hover:scale-105 disabled:hover:scale-100"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                ) : (
+                  <>
+                    <Send className="w-5 h-5 mr-2" />
+                    Ask Innobot
+                  </>
+                )}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
