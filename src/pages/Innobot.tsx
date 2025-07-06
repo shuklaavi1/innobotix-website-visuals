@@ -1,27 +1,23 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import "./Innobot.css";
 
-const GEMINI_API_KEY = "YOUR_API_KEY"; // Replace with your actual key
+const GEMINI_API_KEY = "YOUR_API_KEY"; // Replace with your real key
 
 const Innobot: React.FC = () => {
   const [messages, setMessages] = useState<{ role: "user" | "bot"; text: string }[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [promptCount, setPromptCount] = useState(10);
-  const chatEndRef = useRef<HTMLDivElement | null>(null);
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, [messages]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading || promptCount <= 0) return;
 
-    const userMsg = { role: "user", text: input.trim() };
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages((prev) => [...prev, { role: "user", text: input.trim() }]);
     setInput("");
     setIsLoading(true);
     setPromptCount((prev) => prev - 1);
@@ -55,58 +51,32 @@ const Innobot: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#0d0d0d] text-white font-inter">
-      {/* Beta Banner */}
-      <div className="text-sm text-gray-300 bg-[#1a1a1a] text-center py-1">
-        🧪 Beta Version – Help us improve. This is a test release.
+    <div className="innobot-container">
+      <div className="innobot-top-banner">🧪 Beta Version – Help us improve. This is a test release.</div>
+      <div className="innobot-header">
+        <img src="/logo.png" alt="Innobotix" className="innobot-logo" />
+        <h1>🤖 Innobot – Your Robotics AI Assistant (Beta)</h1>
+        <div className="prompt-count">Questions left: {promptCount}/10</div>
       </div>
 
-      {/* Header */}
-      <header className="text-center text-xl text-blue-400 font-semibold py-3 border-b border-gray-800">
-        🤖 Innobot – Your Robotics AI Assistant (Beta)
-      </header>
-
-      {/* Prompt Count */}
-      <div className="text-center text-gray-400 text-sm mt-1 mb-1">
-        Questions left: {promptCount}/10
-      </div>
-
-      {/* Chat Window */}
-      <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2">
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`max-w-[80%] px-4 py-2 rounded-xl whitespace-pre-wrap ${
-              msg.role === "user"
-                ? "bg-gradient-to-r from-blue-500 to-cyan-400 text-black self-end ml-auto"
-                : "bg-[#1e1e1e] border border-gray-700 self-start"
-            }`}
-          >
+      <div className="chat-window">
+        {messages.map((msg, i) => (
+          <div key={i} className={`chat-bubble ${msg.role === "user" ? "user" : "bot"}`}>
             {msg.text}
           </div>
         ))}
-        {isLoading && (
-          <div className="text-gray-500 text-sm italic">Innobot is typing...</div>
-        )}
-        <div ref={chatEndRef} />
+        {isLoading && <div className="chat-bubble bot">⌛ Innobot is typing...</div>}
+        <div ref={chatEndRef}></div>
       </div>
 
-      {/* Input Section */}
-      <div className="flex items-center border-t border-gray-800 bg-[#111] px-4 py-3">
+      <div className="chat-input">
         <textarea
-          className="flex-1 p-3 rounded-md bg-[#1c1c1c] text-white resize-none focus:outline-none text-sm"
-          rows={2}
-          placeholder="Ask about Arduino, robotics, circuits..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyPress}
+          placeholder="Ask about Arduino, robotics, circuits..."
         />
-        <button
-          onClick={handleSend}
-          className="ml-3 px-4 py-2 rounded-md bg-blue-400 text-black font-bold hover:bg-blue-500 transition-all"
-        >
-          Ask
-        </button>
+        <button onClick={handleSend}>Ask</button>
       </div>
     </div>
   );
