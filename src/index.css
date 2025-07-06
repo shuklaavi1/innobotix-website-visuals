@@ -85,6 +85,15 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Fixed mobile scrolling issues */
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  /* Prevent mobile Safari bounce scrolling */
+  html, body {
+    height: 100%;
+    overscroll-behavior: none;
   }
 }
 
@@ -190,63 +199,25 @@
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+/* ... keep existing code (keyframes definitions) */
 
-@keyframes slideInUp {
-  from { 
-    opacity: 0; 
-    transform: translateY(30px); 
+/* Mobile optimization for chat */
+@media (max-width: 768px) {
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
   }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
+  
+  /* Prevent horizontal scrolling on mobile */
+  body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
-}
-
-@keyframes slideInLeft {
-  from { 
-    opacity: 0; 
-    transform: translateX(-30px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateX(0); 
-  }
-}
-
-@keyframes slideInRight {
-  from { 
-    opacity: 0; 
-    transform: translateX(30px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateX(0); 
-  }
-}
-
-@keyframes scaleIn {
-  from { 
-    opacity: 0; 
-    transform: scale(0.9); 
-  }
-  to { 
-    opacity: 1; 
-    transform: scale(1); 
-  }
-}
-
-@keyframes fadeInUp {
-  from { 
-    opacity: 0; 
-    transform: translateY(20px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
+  
+  /* Fix mobile input focus issues */
+  input, textarea {
+    -webkit-appearance: none;
+    border-radius: 0;
   }
 }
 

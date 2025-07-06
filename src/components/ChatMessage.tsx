@@ -34,11 +34,11 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
           )}
         </div>
         
-        {/* Message Bubble */}
+        {/* Message Bubble - Darker styling */}
         <div className={`rounded-2xl p-4 shadow-xl backdrop-blur-sm ${
           message.isUser 
             ? 'bg-gradient-to-r from-blue-600/90 to-purple-600/90 text-white shadow-blue-500/25' 
-            : 'bg-white/10 text-gray-100 border border-white/20 shadow-white/10'
+            : 'bg-black/30 text-gray-100 border border-white/10 shadow-white/5'
         }`}>
           <p className="whitespace-pre-wrap leading-relaxed text-sm md:text-base">
             {message.text}

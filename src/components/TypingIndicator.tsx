@@ -10,7 +10,7 @@ export const TypingIndicator = () => {
             className="w-6 h-6 rounded-full"
           />
         </div>
-        <div className="bg-white/10 text-gray-100 border border-white/20 rounded-2xl p-4 shadow-xl backdrop-blur-sm">
+        <div className="bg-black/30 text-gray-100 border border-white/10 rounded-2xl p-4 shadow-xl backdrop-blur-sm">
           <div className="flex items-center space-x-3">
             <div className="flex space-x-1">
               <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce shadow-sm shadow-cyan-400/50"></div>

@@ -209,18 +209,18 @@ const Innobot = () => {
         </span>
       </div>
 
-      {/* Main Chat Container */}
-      <div className="flex-1 flex flex-col p-4 md:p-6 relative z-10">
-        <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col">
+      {/* Main Chat Container - Fixed height to prevent mobile issues */}
+      <div className="flex-1 flex flex-col p-4 md:p-6 relative z-10 min-h-0">
+        <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col min-h-0">
           
-          {/* Glassmorphism Chat Card */}
-          <div className="flex-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl shadow-blue-500/10 flex flex-col overflow-hidden">
+          {/* Darker Glassmorphism Chat Card */}
+          <div className="flex-1 bg-black/20 backdrop-blur-xl border border-white/5 rounded-3xl shadow-2xl shadow-blue-500/5 flex flex-col overflow-hidden min-h-0">
             
             {/* Header */}
             <ChatHeader promptCount={promptCount} onClearChat={clearChat} />
 
-            {/* Chat Messages Area */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+            {/* Chat Messages Area - Fixed height with proper scrolling */}
+            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent min-h-0">
               {messages.map((message) => (
                 <ChatMessage key={message.id} message={message} />
               ))}
@@ -230,8 +230,8 @@ const Innobot = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Area */}
-            <div className="border-t border-white/10 p-6 bg-white/5 backdrop-blur-md">
+            {/* Input Area - Fixed at bottom */}
+            <div className="border-t border-white/10 p-6 bg-black/10 backdrop-blur-md flex-shrink-0">
               <ChatInput
                 inputText={inputText}
                 setInputText={setInputText}
