@@ -197,79 +197,83 @@ const Innobot = () => {
   const remainingQuestions = Math.max(0, 5 - promptCount);
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-white font-['Space_Grotesk',sans-serif] flex flex-col">
+    <div className="min-h-screen bg-[#0d0d0d] text-white font-['Poppins',sans-serif] flex flex-col">
       <Navigation />
       
-      {/* Beta Banner - Sticky */}
-      <div className="sticky top-16 z-40 bg-gradient-to-r from-orange-600/20 to-yellow-600/20 border-b border-orange-500/30 py-2 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <span className="text-orange-300 text-sm font-medium animate-pulse">
-            🧪 Beta Version – Help us improve. This is a test release.
-          </span>
-        </div>
+      {/* Beta Banner */}
+      <div className="bg-gradient-to-r from-amber-600/20 to-orange-600/20 border-b border-amber-500/30 py-2 text-center">
+        <span className="text-amber-300 text-sm font-medium">
+          🧪 Beta Version – Help us improve. This is a test release.
+        </span>
       </div>
 
       {/* Header Section */}
       <div className="text-center py-6 px-4 border-b border-gray-800/50">
-        <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent mb-3 animate-fade-in">
+        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent mb-3">
           🤖 Innobot – Your Robotics AI Assistant (Beta)
         </h1>
-        <p className="text-lg md:text-xl text-gray-300 mb-4 animate-fade-in font-light">
-          Ask me anything about Arduino, circuits, robotics, and more!
-        </p>
         <div className="flex items-center justify-center gap-4 flex-wrap">
           <div className="bg-blue-600/20 border border-blue-500/30 rounded-full px-4 py-2 text-sm">
             Questions left: <span className="font-bold text-blue-400">{remainingQuestions}/5</span>
           </div>
           <button
             onClick={clearChat}
-            className="bg-gray-700/50 hover:bg-gray-600/50 border border-gray-600/30 rounded-full px-4 py-2 text-sm transition-all"
+            className="bg-gray-700/50 hover:bg-gray-600/50 border border-gray-600/30 rounded-full px-4 py-2 text-sm transition-all text-gray-300 hover:text-white"
           >
             Clear Chat
           </button>
         </div>
       </div>
 
-      {/* Chat Window */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6" style={{ paddingBottom: '120px' }}>
+      {/* Chat Container */}
+      <div className="flex-1 flex flex-col min-h-0">
+        {/* Messages Area */}
+        <div className="flex-1 overflow-y-auto px-4 py-6">
           <div className="max-w-4xl mx-auto space-y-6">
-            {messages.map((message, index) => (
+            {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex animate-fade-in ${message.isUser ? 'justify-end' : 'justify-start'}`}
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
               >
-                <div className={`flex items-start space-x-3 max-w-[85%] md:max-w-[70%] ${message.isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                <div className={`flex items-start space-x-3 max-w-[80%] ${message.isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                     message.isUser 
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg shadow-blue-500/30' 
-                      : 'bg-gradient-to-r from-cyan-500 to-blue-500 shadow-lg shadow-cyan-500/30'
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600' 
+                      : 'bg-gray-800 border border-cyan-500/50'
                   }`}>
-                    {message.isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+                    {message.isUser ? (
+                      <User className="w-4 h-4" />
+                    ) : (
+                      <img 
+                        src="https://i.postimg.cc/9Qr20MFq/INNO-LOGO-FINAL.png" 
+                        alt="Innobot"
+                        className="w-5 h-5 rounded-full"
+                      />
+                    )}
                   </div>
-                  <div className={`rounded-2xl p-4 backdrop-blur-sm shadow-lg ${
+                  <div className={`rounded-2xl p-4 ${
                     message.isUser 
-                      ? 'bg-gradient-to-r from-blue-600/90 to-purple-600/90 text-white border border-blue-400/30 shadow-blue-500/20' 
-                      : 'bg-gray-800/90 text-gray-100 border border-gray-600/30 shadow-gray-900/30'
+                      ? 'bg-gradient-to-r from-blue-600/90 to-purple-600/90 text-white' 
+                      : 'bg-gray-800/90 text-gray-100 border border-gray-700/50'
                   }`}>
                     <p className="whitespace-pre-wrap leading-relaxed text-sm md:text-base">{message.text}</p>
-                    <div className="text-xs opacity-60 mt-2 font-mono">
-                      {message.timestamp.toLocaleTimeString()}
-                    </div>
                   </div>
                 </div>
               </div>
             ))}
             
-            {/* Typing Animation */}
+            {/* Typing Indicator */}
             {isLoading && (
-              <div className="flex justify-start animate-fade-in">
-                <div className="flex items-start space-x-3 max-w-[85%] md:max-w-[70%]">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 shadow-lg shadow-cyan-500/30">
-                    <Bot className="w-4 h-4" />
+              <div className="flex justify-start">
+                <div className="flex items-start space-x-3 max-w-[80%]">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-800 border border-cyan-500/50">
+                    <img 
+                      src="https://i.postimg.cc/9Qr20MFq/INNO-LOGO-FINAL.png" 
+                      alt="Innobot"
+                      className="w-5 h-5 rounded-full"
+                    />
                   </div>
-                  <div className="bg-gray-800/90 text-gray-100 border border-gray-600/30 rounded-2xl p-4 backdrop-blur-sm shadow-lg">
+                  <div className="bg-gray-800/90 text-gray-100 border border-gray-700/50 rounded-2xl p-4">
                     <div className="flex items-center space-x-2">
                       <div className="flex space-x-1">
                         <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
@@ -286,43 +290,43 @@ const Innobot = () => {
             <div ref={messagesEndRef} />
           </div>
         </div>
-      </div>
 
-      {/* Fixed Input Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#0d0d0d]/95 backdrop-blur-xl border-t border-gray-700/50 p-4 z-50">
-        <div className="max-w-4xl mx-auto">
-          {promptCount >= 5 && (
-            <div className="mb-4 p-3 bg-red-600/20 border border-red-500/30 rounded-xl text-center">
-              <span className="text-red-300 text-sm">🚫 Free limit reached! You've used all 5 questions.</span>
+        {/* Input Area - Fixed at bottom */}
+        <div className="border-t border-gray-800/50 p-4 bg-[#0d0d0d]/95 backdrop-blur-sm">
+          <div className="max-w-4xl mx-auto">
+            {promptCount >= 5 && (
+              <div className="mb-4 p-3 bg-red-600/20 border border-red-500/30 rounded-xl text-center">
+                <span className="text-red-300 text-sm">🚫 Free limit reached! You've used all 5 questions.</span>
+              </div>
+            )}
+            <div className="flex space-x-3 items-end">
+              <div className="flex-1">
+                <Textarea
+                  ref={textareaRef}
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Ask about Arduino, robotics, circuits..."
+                  className="bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 resize-none min-h-[50px] max-h-[50px] backdrop-blur-sm rounded-xl border-2 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                  disabled={isLoading || promptCount >= 5}
+                  rows={1}
+                />
+              </div>
+              <Button
+                onClick={handleSendMessage}
+                disabled={!inputText.trim() || isLoading || promptCount >= 5}
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 px-6 py-3 rounded-xl h-[50px] transition-all hover:scale-105 disabled:hover:scale-100 disabled:opacity-50"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <>
+                    <Send className="w-4 h-4 mr-2" />
+                    Ask Innobot
+                  </>
+                )}
+              </Button>
             </div>
-          )}
-          <div className="flex space-x-3 items-end">
-            <div className="flex-1">
-              <Textarea
-                ref={textareaRef}
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Ask about Arduino, robotics, circuits..."
-                className="bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 resize-none h-14 backdrop-blur-sm rounded-2xl border-2 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
-                disabled={isLoading || promptCount >= 5}
-                rows={1}
-              />
-            </div>
-            <Button
-              onClick={handleSendMessage}
-              disabled={!inputText.trim() || isLoading || promptCount >= 5}
-              className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-2xl shadow-blue-500/30 px-6 py-3 rounded-2xl h-14 transition-all hover:scale-105 disabled:hover:scale-100 disabled:opacity-50"
-            >
-              {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <>
-                  <Send className="w-4 h-4 mr-2" />
-                  Ask Innobot
-                </>
-              )}
-            </Button>
           </div>
         </div>
       </div>
