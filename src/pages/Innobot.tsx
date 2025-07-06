@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { Helmet } from "react-helmet-async";
 
 // Types
 interface Message {
@@ -231,22 +234,33 @@ User question: ${text}`
   const isLimitReached = questionCount >= maxQuestions;
 
   return (
-    <div className={`h-screen flex flex-col bg-[#0d0d0d] text-white font-['Inter'] ${className}`}>
-      {/* Top Header */}
-      <div className="sticky top-0 z-50 bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-white/10 p-4 text-center">
-        <div 
-          className="text-2xl font-semibold bg-gradient-to-r from-[#00ff88] via-[#00b4ff] to-[#8000ff] bg-clip-text text-transparent"
-          style={{
-            animation: 'glow-text 3s ease-in-out infinite alternate',
-            textShadow: '0 0 20px rgba(0, 255, 136, 0.3)'
-          }}
-        >
-          🤖 Innobot – Your Robotics AI Assistant (Beta)
+    <>
+      <Helmet>
+        <title>Innobot - AI Robotics Assistant | Innobotix</title>
+        <meta name="description" content="Chat with Innobot, your AI-powered robotics assistant. Get expert help with Arduino, circuits, sensors, and robotics projects." />
+        <meta name="keywords" content="robotics AI, chatbot, Arduino help, robotics assistant, electronics help, Innobotix bot" />
+      </Helmet>
+
+      <div className={`min-h-screen flex flex-col bg-[#0d0d0d] text-white font-['Inter'] ${className}`}>
+        <Navigation />
+        
+        {/* Chat Header */}
+        <div className="bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-white/10 p-4 text-center">
+          <div 
+            className="text-2xl font-semibold bg-gradient-to-r from-[#00ff88] via-[#00b4ff] to-[#8000ff] bg-clip-text text-transparent"
+            style={{
+              animation: 'glow-text 3s ease-in-out infinite alternate',
+              textShadow: '0 0 20px rgba(0, 255, 136, 0.3)'
+            }}
+          >
+            🤖 Innobot – Your Robotics AI Assistant (Beta)
+          </div>
+          <div className="flex justify-center mt-2">
+            <div className="bg-[#00ff88]/10 border border-[#00ff88]/30 px-4 py-2 rounded-full text-sm text-[#00ff88] font-medium shadow-lg shadow-[#00ff88]/20">
+              Questions left: {remainingQuestions}/{maxQuestions}
+            </div>
+          </div>
         </div>
-        <div className="absolute top-1/2 right-8 transform -translate-y-1/2 bg-[#00ff88]/10 border border-[#00ff88]/30 px-4 py-2 rounded-full text-sm text-[#00ff88] font-medium shadow-lg shadow-[#00ff88]/20 max-md:static max-md:transform-none max-md:mt-2">
-          Questions left: {remainingQuestions}/{maxQuestions}
-        </div>
-      </div>
 
       {/* Chat Container */}
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -298,7 +312,13 @@ User question: ${text}`
                     ? 'bg-gradient-to-br from-[#00b4ff] to-[#0099ff] shadow-lg shadow-[#00b4ff]/40' 
                     : 'bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] border-2 border-[#00ff88] shadow-lg shadow-[#00ff88]/30'
                 } max-md:w-7 max-md:h-7 max-md:text-sm`}>
-                  {message.isUser ? '👤' : '🤖'}
+                  {message.isUser ? '👤' : (
+                    <img 
+                      src="https://i.postimg.cc/CMNN97jZ/INNO-LOGO-FINAL.png" 
+                      alt="Innobot"
+                      className="w-6 h-6 rounded-full object-cover"
+                    />
+                  )}
                 </div>
 
                 {/* Message Bubble */}
@@ -380,30 +400,35 @@ User question: ${text}`
         </div>
       </div>
 
-      {/* Custom Styles */}
-      <style jsx>{`
-        @keyframes glow-text {
-          0% { text-shadow: 0 0 20px rgba(0, 255, 136, 0.3); }
-          100% { text-shadow: 0 0 30px rgba(0, 255, 136, 0.6); }
-        }
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes shake {
-          0% { transform: translateX(0); }
-          25% { transform: translateX(-5px); }
-          75% { transform: translateX(5px); }
-          100% { transform: translateX(0); }
-        }
-      `}</style>
-    </div>
+        {/* Custom Styles */}
+        <style>
+          {`
+            @keyframes glow-text {
+              0% { text-shadow: 0 0 20px rgba(0, 255, 136, 0.3); }
+              100% { text-shadow: 0 0 30px rgba(0, 255, 136, 0.6); }
+            }
+            @keyframes slideIn {
+              from {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            @keyframes shake {
+              0% { transform: translateX(0); }
+              25% { transform: translateX(-5px); }
+              75% { transform: translateX(5px); }
+              100% { transform: translateX(0); }
+            }
+          `}
+        </style>
+        
+        <Footer />
+      </div>
+    </>
   );
 };
 
