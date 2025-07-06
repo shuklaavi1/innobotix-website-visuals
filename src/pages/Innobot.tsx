@@ -1,26 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Innobot.css";
 
-const GEMINI_API_KEY = "YOUR_API_KEY"; // Replace with your real key
+const GEMINI_API_KEY = "YOUR_API_KEY"; // Replace with your key
 
-const Innobot: React.FC = () => {
-  const [messages, setMessages] = useState<{ role: "user" | "bot"; text: string }[]>([]);
+const Innobot = () => {
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [promptCount, setPromptCount] = useState(10);
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(false);
+  const bottomRef = useRef(null);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSend = async () => {
-    if (!input.trim() || isLoading || promptCount <= 0) return;
-
-    setMessages((prev) => [...prev, { role: "user", text: input.trim() }]);
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+    const userMsg = { role: "user", text: input };
+    setMessages((prev) => [...prev, userMsg]);
     setInput("");
-    setIsLoading(true);
-    setPromptCount((prev) => prev - 1);
+    setLoading(true);
 
     try {
       const res = await fetch(
@@ -29,54 +27,52 @@ const Innobot: React.FC = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: input.trim() }] }],
+            contents: [{ parts: [{ text: input }] }],
           }),
         }
       );
       const data = await res.json();
-      const botText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "⚠️ I couldn’t answer that.";
-      setMessages((prev) => [...prev, { role: "bot", text: botText }]);
+      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "⚠️ No response.";
+      setMessages((prev) => [...prev, { role: "bot", text: reply }]);
     } catch (err) {
       setMessages((prev) => [...prev, { role: "bot", text: "⚠️ API error. Try again later." }]);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKey = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleSend();
+      sendMessage();
     }
   };
 
   return (
-    <div className="innobot-container">
-      <div className="innobot-top-banner">🧪 Beta Version – Help us improve. This is a test release.</div>
-      <div className="innobot-header">
-        <img src="/logo.png" alt="Innobotix" className="innobot-logo" />
-        <h1>🤖 Innobot – Your Robotics AI Assistant (Beta)</h1>
-        <div className="prompt-count">Questions left: {promptCount}/10</div>
-      </div>
+    <div className="chat-container">
+      <header className="chat-header">
+        <img src="/logo.png" alt="Innobotix" />
+        <h1>🤖 Innobot – Robotics AI Assistant</h1>
+      </header>
 
-      <div className="chat-window">
+      <div className="chat-messages">
         {messages.map((msg, i) => (
-          <div key={i} className={`chat-bubble ${msg.role === "user" ? "user" : "bot"}`}>
+          <div key={i} className={`chat-bubble ${msg.role}`}>
             {msg.text}
           </div>
         ))}
-        {isLoading && <div className="chat-bubble bot">⌛ Innobot is typing...</div>}
-        <div ref={chatEndRef}></div>
+        {loading && <div className="chat-bubble bot">✍️ Innobot is typing...</div>}
+        <div ref={bottomRef}></div>
       </div>
 
       <div className="chat-input">
         <textarea
+          placeholder="Ask me anything about circuits, Arduino, robotics..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyPress}
-          placeholder="Ask about Arduino, robotics, circuits..."
+          onKeyDown={handleKey}
         />
-        <button onClick={handleSend}>Ask</button>
+        <button onClick={sendMessage}>Send</button>
       </div>
     </div>
   );
