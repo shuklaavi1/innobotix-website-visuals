@@ -21,6 +21,7 @@ const Innobot = () => {
   const [promptCount, setPromptCount] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Load chat history and prompt count from localStorage on component mount
   useEffect(() => {
@@ -41,7 +42,7 @@ const Innobot = () => {
       // Set initial welcome message if no saved messages
       const welcomeMessage: Message = {
         id: '1',
-        text: "Hello! I'm Innobot, your robotics AI assistant. I'm here to help you with Arduino projects, circuit design, robotics questions, and more. What would you like to know?",
+        text: "Hello! I'm Innobot, your advanced robotics AI assistant. I'm here to help you with Arduino projects, circuit design, robotics questions, and more. What would you like to know?",
         isUser: false,
         timestamp: new Date()
       };
@@ -53,10 +54,15 @@ const Innobot = () => {
     }
   }, []);
 
-  // Auto-scroll to bottom when new messages are added
+  // Smooth scroll to bottom of chat container only (not entire page)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth"
+      });
+    }
+  }, [messages, isTyping]);
 
   // Save messages to localStorage whenever messages change
   useEffect(() => {
@@ -72,7 +78,7 @@ const Innobot = () => {
 
   const typeWriter = (text: string, callback: (currentText: string) => void) => {
     let i = 0;
-    const speed = 15;
+    const speed = 25;
     
     const type = () => {
       if (i < text.length) {
@@ -185,7 +191,7 @@ const Innobot = () => {
   const clearChat = () => {
     const welcomeMessage: Message = {
       id: '1',
-      text: "Hello! I'm Innobot, your robotics AI assistant. I'm here to help you with Arduino projects, circuit design, robotics questions, and more. What would you like to know?",
+      text: "Hello! I'm Innobot, your advanced robotics AI assistant. I'm here to help you with Arduino projects, circuit design, robotics questions, and more. What would you like to know?",
       isUser: false,
       timestamp: new Date()
     };
@@ -194,13 +200,16 @@ const Innobot = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-black font-['Poppins',sans-serif] flex flex-col relative overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-black font-['Poppins',sans-serif] flex flex-col relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-cyan-500/5"></div>
       <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
       
-      <Navigation />
+      {/* Desktop Navigation - Hidden on mobile */}
+      <div className="hidden md:block">
+        <Navigation />
+      </div>
       
       {/* Beta Banner */}
       <div className="bg-gradient-to-r from-amber-600/20 to-orange-600/20 border-b border-amber-500/30 py-2 text-center backdrop-blur-sm relative z-10">
@@ -209,18 +218,22 @@ const Innobot = () => {
         </span>
       </div>
 
-      {/* Main Chat Container - Fixed height to prevent mobile issues */}
-      <div className="flex-1 flex flex-col p-4 md:p-6 relative z-10 min-h-0">
+      {/* Main Chat Container - Full height with proper mobile handling */}
+      <div className="flex-1 flex flex-col relative z-10 min-h-0 p-2 md:p-6">
         <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col min-h-0">
           
           {/* Darker Glassmorphism Chat Card */}
-          <div className="flex-1 bg-black/20 backdrop-blur-xl border border-white/5 rounded-3xl shadow-2xl shadow-blue-500/5 flex flex-col overflow-hidden min-h-0">
+          <div className="flex-1 bg-black/40 backdrop-blur-xl border border-white/10 rounded-none md:rounded-3xl shadow-2xl shadow-blue-500/10 flex flex-col overflow-hidden min-h-0">
             
             {/* Header */}
             <ChatHeader promptCount={promptCount} onClearChat={clearChat} />
 
-            {/* Chat Messages Area - Fixed height with proper scrolling */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent min-h-0">
+            {/* Chat Messages Area - Scrollable container with fixed height */}
+            <div 
+              ref={chatContainerRef}
+              className="flex-1 overflow-y-auto px-3 md:px-6 py-4 space-y-4 md:space-y-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent min-h-0"
+              style={{ scrollBehavior: 'smooth' }}
+            >
               {messages.map((message) => (
                 <ChatMessage key={message.id} message={message} />
               ))}
@@ -230,8 +243,8 @@ const Innobot = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Area - Fixed at bottom */}
-            <div className="border-t border-white/10 p-6 bg-black/10 backdrop-blur-md flex-shrink-0">
+            {/* Input Area - Fixed at bottom with mobile optimization */}
+            <div className="border-t border-white/10 p-3 md:p-6 bg-black/20 backdrop-blur-md flex-shrink-0">
               <ChatInput
                 inputText={inputText}
                 setInputText={setInputText}
@@ -245,7 +258,10 @@ const Innobot = () => {
         </div>
       </div>
 
-      <Footer />
+      {/* Desktop Footer - Hidden on mobile */}
+      <div className="hidden md:block">
+        <Footer />
+      </div>
     </div>
   );
 };

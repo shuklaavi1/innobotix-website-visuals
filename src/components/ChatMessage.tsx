@@ -15,30 +15,30 @@ interface ChatMessageProps {
 export const ChatMessage = ({ message }: ChatMessageProps) => {
   return (
     <div className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} animate-fade-in`}>
-      <div className={`flex items-start space-x-4 max-w-[85%] ${message.isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
+      <div className={`flex items-start space-x-2 md:space-x-4 max-w-[85%] md:max-w-[80%] ${message.isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
         
         {/* Avatar */}
-        <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg ${
+        <div className={`w-6 h-6 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg ${
           message.isUser 
             ? 'bg-gradient-to-r from-blue-600 to-purple-600 shadow-blue-500/50' 
             : 'bg-gradient-to-r from-gray-700 to-gray-800 border border-cyan-500/50 shadow-cyan-500/30'
         }`}>
           {message.isUser ? (
-            <User className="w-5 h-5 text-white" />
+            <User className="w-3 h-3 md:w-5 md:h-5 text-white" />
           ) : (
             <img 
               src="https://i.postimg.cc/9Qr20MFq/INNO-LOGO-FINAL.png" 
               alt="Innobot"
-              className="w-6 h-6 rounded-full"
+              className="w-4 h-4 md:w-6 md:h-6 rounded-full"
             />
           )}
         </div>
         
-        {/* Message Bubble - Darker styling */}
-        <div className={`rounded-2xl p-4 shadow-xl backdrop-blur-sm ${
+        {/* Message Bubble - Mobile optimized */}
+        <div className={`rounded-2xl p-3 md:p-4 shadow-xl backdrop-blur-sm ${
           message.isUser 
             ? 'bg-gradient-to-r from-blue-600/90 to-purple-600/90 text-white shadow-blue-500/25' 
-            : 'bg-black/30 text-gray-100 border border-white/10 shadow-white/5'
+            : 'bg-black/40 text-gray-100 border border-white/10 shadow-white/5 shadow-lg shadow-cyan-500/20'
         }`}>
           <p className="whitespace-pre-wrap leading-relaxed text-sm md:text-base">
             {message.text}
