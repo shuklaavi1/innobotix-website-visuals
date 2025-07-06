@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Innobot.css";
 
-const GEMINI_API_KEY = "YOUR_API_KEY"; // Replace with your key
+const GEMINI_API_KEY = "AIzaSyA5W6cpU5fEqQbjp1Or0R6snHwIHwKrj2k"; // Replace with your key
 
 const Innobot = () => {
   const [messages, setMessages] = useState([]);
