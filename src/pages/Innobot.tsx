@@ -1,10 +1,11 @@
 
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { ChatHeader } from "@/components/ChatHeader";
+import { ChatMessage } from "@/components/ChatMessage";
+import { TypingIndicator } from "@/components/TypingIndicator";
+import { ChatInput } from "@/components/ChatInput";
 import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Send, User, Bot, Loader2 } from "lucide-react";
 
 interface Message {
   id: string;
@@ -20,7 +21,6 @@ const Innobot = () => {
   const [promptCount, setPromptCount] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Load chat history and prompt count from localStorage on component mount
   useEffect(() => {
@@ -194,36 +194,11 @@ const Innobot = () => {
     localStorage.removeItem('innobot-messages');
   };
 
-  const remainingQuestions = Math.max(0, 5 - promptCount);
-
   return (
     <div className="min-h-screen bg-[#0d0d0d] text-white font-['Poppins',sans-serif] flex flex-col">
       <Navigation />
       
-      {/* Beta Banner */}
-      <div className="bg-gradient-to-r from-amber-600/20 to-orange-600/20 border-b border-amber-500/30 py-2 text-center">
-        <span className="text-amber-300 text-sm font-medium">
-          🧪 Beta Version – Help us improve. This is a test release.
-        </span>
-      </div>
-
-      {/* Header Section */}
-      <div className="text-center py-6 px-4 border-b border-gray-800/50">
-        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent mb-3">
-          🤖 Innobot – Your Robotics AI Assistant (Beta)
-        </h1>
-        <div className="flex items-center justify-center gap-4 flex-wrap">
-          <div className="bg-blue-600/20 border border-blue-500/30 rounded-full px-4 py-2 text-sm">
-            Questions left: <span className="font-bold text-blue-400">{remainingQuestions}/5</span>
-          </div>
-          <button
-            onClick={clearChat}
-            className="bg-gray-700/50 hover:bg-gray-600/50 border border-gray-600/30 rounded-full px-4 py-2 text-sm transition-all text-gray-300 hover:text-white"
-          >
-            Clear Chat
-          </button>
-        </div>
-      </div>
+      <ChatHeader promptCount={promptCount} onClearChat={clearChat} />
 
       {/* Chat Container */}
       <div className="flex-1 flex flex-col min-h-0">
@@ -231,104 +206,25 @@ const Innobot = () => {
         <div className="flex-1 overflow-y-auto px-4 py-6">
           <div className="max-w-4xl mx-auto space-y-6">
             {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-              >
-                <div className={`flex items-start space-x-3 max-w-[80%] ${message.isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    message.isUser 
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600' 
-                      : 'bg-gray-800 border border-cyan-500/50'
-                  }`}>
-                    {message.isUser ? (
-                      <User className="w-4 h-4" />
-                    ) : (
-                      <img 
-                        src="https://i.postimg.cc/9Qr20MFq/INNO-LOGO-FINAL.png" 
-                        alt="Innobot"
-                        className="w-5 h-5 rounded-full"
-                      />
-                    )}
-                  </div>
-                  <div className={`rounded-2xl p-4 ${
-                    message.isUser 
-                      ? 'bg-gradient-to-r from-blue-600/90 to-purple-600/90 text-white' 
-                      : 'bg-gray-800/90 text-gray-100 border border-gray-700/50'
-                  }`}>
-                    <p className="whitespace-pre-wrap leading-relaxed text-sm md:text-base">{message.text}</p>
-                  </div>
-                </div>
-              </div>
+              <ChatMessage key={message.id} message={message} />
             ))}
             
             {/* Typing Indicator */}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="flex items-start space-x-3 max-w-[80%]">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-800 border border-cyan-500/50">
-                    <img 
-                      src="https://i.postimg.cc/9Qr20MFq/INNO-LOGO-FINAL.png" 
-                      alt="Innobot"
-                      className="w-5 h-5 rounded-full"
-                    />
-                  </div>
-                  <div className="bg-gray-800/90 text-gray-100 border border-gray-700/50 rounded-2xl p-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                      </div>
-                      <span className="text-sm text-gray-300">Thinking...</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+            {isLoading && <TypingIndicator />}
             
             <div ref={messagesEndRef} />
           </div>
         </div>
 
         {/* Input Area - Fixed at bottom */}
-        <div className="border-t border-gray-800/50 p-4 bg-[#0d0d0d]/95 backdrop-blur-sm">
-          <div className="max-w-4xl mx-auto">
-            {promptCount >= 5 && (
-              <div className="mb-4 p-3 bg-red-600/20 border border-red-500/30 rounded-xl text-center">
-                <span className="text-red-300 text-sm">🚫 Free limit reached! You've used all 5 questions.</span>
-              </div>
-            )}
-            <div className="flex space-x-3 items-end">
-              <div className="flex-1">
-                <Textarea
-                  ref={textareaRef}
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Ask about Arduino, robotics, circuits..."
-                  className="bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 resize-none min-h-[50px] max-h-[50px] backdrop-blur-sm rounded-xl border-2 focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
-                  disabled={isLoading || promptCount >= 5}
-                  rows={1}
-                />
-              </div>
-              <Button
-                onClick={handleSendMessage}
-                disabled={!inputText.trim() || isLoading || promptCount >= 5}
-                className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 px-6 py-3 rounded-xl h-[50px] transition-all hover:scale-105 disabled:hover:scale-100 disabled:opacity-50"
-              >
-                {isLoading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                ) : (
-                  <>
-                    <Send className="w-4 h-4 mr-2" />
-                    Ask Innobot
-                  </>
-                )}
-              </Button>
-            </div>
-          </div>
-        </div>
+        <ChatInput
+          inputText={inputText}
+          setInputText={setInputText}
+          isLoading={isLoading}
+          promptCount={promptCount}
+          onSendMessage={handleSendMessage}
+          onKeyPress={handleKeyPress}
+        />
       </div>
 
       <Footer />
