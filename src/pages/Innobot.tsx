@@ -1,251 +1,113 @@
+import React, { useState, useRef, useEffect } from "react";
 
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
-import { ChatHeader } from "@/components/ChatHeader";
-import { ChatMessage } from "@/components/ChatMessage";
-import { TypingIndicator } from "@/components/TypingIndicator";
-import { ChatInput } from "@/components/ChatInput";
-import { useState, useRef, useEffect } from "react";
+const GEMINI_API_KEY = "YOUR_API_KEY"; // Replace with your actual key
 
-interface Message {
-  id: string;
-  text: string;
-  isUser: boolean;
-  timestamp: Date;
-}
-
-const Innobot = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [inputText, setInputText] = useState("");
+const Innobot: React.FC = () => {
+  const [messages, setMessages] = useState<{ role: "user" | "bot"; text: string }[]>([]);
+  const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [promptCount, setPromptCount] = useState(0);
-  const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [promptCount, setPromptCount] = useState(10);
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Load chat history and prompt count from localStorage on component mount
   useEffect(() => {
-    const savedMessages = localStorage.getItem('innobot-messages');
-    const savedPromptCount = localStorage.getItem('innobot-prompt-count');
-    
-    if (savedMessages) {
-      try {
-        const parsedMessages = JSON.parse(savedMessages);
-        setMessages(parsedMessages.map((msg: any) => ({
-          ...msg,
-          timestamp: new Date(msg.timestamp)
-        })));
-      } catch (error) {
-        console.error('Error parsing saved messages:', error);
-      }
-    } else {
-      // Set initial welcome message if no saved messages
-      const welcomeMessage: Message = {
-        id: '1',
-        text: "Hello! I'm Innobot, your robotics AI assistant. I'm here to help you with Arduino projects, circuit design, robotics questions, and more. What would you like to know?",
-        isUser: false,
-        timestamp: new Date()
-      };
-      setMessages([welcomeMessage]);
-    }
-    
-    if (savedPromptCount) {
-      setPromptCount(parseInt(savedPromptCount));
-    }
-  }, []);
-
-  // Auto-scroll to bottom when new messages are added
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    scrollToBottom();
   }, [messages]);
 
-  // Save messages to localStorage whenever messages change
-  useEffect(() => {
-    if (messages.length > 0) {
-      localStorage.setItem('innobot-messages', JSON.stringify(messages));
-    }
-  }, [messages]);
-
-  // Save prompt count to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('innobot-prompt-count', promptCount.toString());
-  }, [promptCount]);
-
-  const typeWriter = (text: string, callback: (currentText: string) => void) => {
-    let i = 0;
-    const speed = 15;
-    
-    const type = () => {
-      if (i < text.length) {
-        callback(text.substring(0, i + 1));
-        i++;
-        setTimeout(type, speed);
-      } else {
-        setIsTyping(false);
-      }
-    };
-    
-    setIsTyping(true);
-    type();
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSendMessage = async () => {
-    if (!inputText.trim() || isLoading || promptCount >= 10) return;
+  const handleSend = async () => {
+    if (!input.trim() || isLoading || promptCount <= 0) return;
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      text: inputText,
-      isUser: true,
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setInputText("");
+    const userMsg = { role: "user", text: input.trim() };
+    setMessages((prev) => [...prev, userMsg]);
+    setInput("");
     setIsLoading(true);
-    setPromptCount(prev => prev + 1);
-
-    const aiMessageId = (Date.now() + 1).toString();
-    const aiMessage: Message = {
-      id: aiMessageId,
-      text: "",
-      isUser: false,
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, aiMessage]);
+    setPromptCount((prev) => prev - 1);
 
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyA5W6cpU5fEqQbjp1Or0R6snHwIHwKrj2k`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `You are Innobot, a concise and intelligent assistant helping students with robotics, Arduino, and electronics. Give clear and accurate answers. Question: ${inputText}`
-            }]
-          }],
-          generationConfig: {
-            temperature: 0.7,
-            topP: 0.8,
-            topK: 40,
-            maxOutputTokens: 1024,
-          }
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      
-      let aiResponse = "I'm having trouble processing your request right now. Please try again later.";
-      
-      if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
-        aiResponse = data.candidates[0].content.parts[0].text;
-      }
-
-      // Update the AI message with typing animation
-      typeWriter(aiResponse, (currentText) => {
-        setMessages(prev => 
-          prev.map(msg => 
-            msg.id === aiMessageId 
-              ? { ...msg, text: currentText }
-              : msg
-          )
-        );
-      });
-
-    } catch (error) {
-      console.error('Error calling Gemini API:', error);
-      const errorMessage = "Sorry, I encountered an error. Please try again later.";
-      
-      typeWriter(errorMessage, (currentText) => {
-        setMessages(prev => 
-          prev.map(msg => 
-            msg.id === aiMessageId 
-              ? { ...msg, text: currentText }
-              : msg
-          )
-        );
-      });
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: input.trim() }] }],
+          }),
+        }
+      );
+      const data = await res.json();
+      const botText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "⚠️ I couldn’t answer that.";
+      setMessages((prev) => [...prev, { role: "bot", text: botText }]);
+    } catch (err) {
+      setMessages((prev) => [...prev, { role: "bot", text: "⚠️ API error. Try again later." }]);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleSendMessage();
+      handleSend();
     }
   };
 
-  const clearChat = () => {
-    const welcomeMessage: Message = {
-      id: '1',
-      text: "Hello! I'm Innobot, your robotics AI assistant. I'm here to help you with Arduino projects, circuit design, robotics questions, and more. What would you like to know?",
-      isUser: false,
-      timestamp: new Date()
-    };
-    setMessages([welcomeMessage]);
-    localStorage.removeItem('innobot-messages');
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-black font-['Poppins',sans-serif] flex flex-col relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-cyan-500/5"></div>
-      <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-      
-      <Navigation />
-      
+    <div className="flex flex-col h-screen bg-[#0d0d0d] text-white font-inter">
       {/* Beta Banner */}
-      <div className="bg-gradient-to-r from-amber-600/20 to-orange-600/20 border-b border-amber-500/30 py-2 text-center backdrop-blur-sm relative z-10">
-        <span className="text-amber-300 text-sm font-medium">
-          🧪 Beta Version – Help us improve. This is a test release.
-        </span>
+      <div className="text-sm text-gray-300 bg-[#1a1a1a] text-center py-1">
+        🧪 Beta Version – Help us improve. This is a test release.
       </div>
 
-      {/* Main Chat Container - Fixed height to prevent mobile issues */}
-      <div className="flex-1 flex flex-col p-4 md:p-6 relative z-10 min-h-0">
-        <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col min-h-0">
-          
-          {/* Darker Glassmorphism Chat Card */}
-          <div className="flex-1 bg-black/20 backdrop-blur-xl border border-white/5 rounded-3xl shadow-2xl shadow-blue-500/5 flex flex-col overflow-hidden min-h-0">
-            
-            {/* Header */}
-            <ChatHeader promptCount={promptCount} onClearChat={clearChat} />
+      {/* Header */}
+      <header className="text-center text-xl text-blue-400 font-semibold py-3 border-b border-gray-800">
+        🤖 Innobot – Your Robotics AI Assistant (Beta)
+      </header>
 
-            {/* Chat Messages Area - Fixed height with proper scrolling */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent min-h-0">
-              {messages.map((message) => (
-                <ChatMessage key={message.id} message={message} />
-              ))}
-              
-              {isLoading && <TypingIndicator />}
-              
-              <div ref={messagesEndRef} />
-            </div>
+      {/* Prompt Count */}
+      <div className="text-center text-gray-400 text-sm mt-1 mb-1">
+        Questions left: {promptCount}/10
+      </div>
 
-            {/* Input Area - Fixed at bottom */}
-            <div className="border-t border-white/10 p-6 bg-black/10 backdrop-blur-md flex-shrink-0">
-              <ChatInput
-                inputText={inputText}
-                setInputText={setInputText}
-                isLoading={isLoading}
-                promptCount={promptCount}
-                onSendMessage={handleSendMessage}
-                onKeyPress={handleKeyPress}
-              />
-            </div>
+      {/* Chat Window */}
+      <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2">
+        {messages.map((msg, idx) => (
+          <div
+            key={idx}
+            className={`max-w-[80%] px-4 py-2 rounded-xl whitespace-pre-wrap ${
+              msg.role === "user"
+                ? "bg-gradient-to-r from-blue-500 to-cyan-400 text-black self-end ml-auto"
+                : "bg-[#1e1e1e] border border-gray-700 self-start"
+            }`}
+          >
+            {msg.text}
           </div>
-        </div>
+        ))}
+        {isLoading && (
+          <div className="text-gray-500 text-sm italic">Innobot is typing...</div>
+        )}
+        <div ref={chatEndRef} />
       </div>
 
-      <Footer />
+      {/* Input Section */}
+      <div className="flex items-center border-t border-gray-800 bg-[#111] px-4 py-3">
+        <textarea
+          className="flex-1 p-3 rounded-md bg-[#1c1c1c] text-white resize-none focus:outline-none text-sm"
+          rows={2}
+          placeholder="Ask about Arduino, robotics, circuits..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyPress}
+        />
+        <button
+          onClick={handleSend}
+          className="ml-3 px-4 py-2 rounded-md bg-blue-400 text-black font-bold hover:bg-blue-500 transition-all"
+        >
+          Ask
+        </button>
+      </div>
     </div>
   );
 };
