@@ -91,7 +91,7 @@ export const Hero = () => {
             style={{ fontFamily: 'Orbitron, monospace' }}
           >
             <span className="block text-white">Engineering</span>
-            <span className="block bg-gradient-to-r from-cyan-400 via-purple-400 to-green-400 bg-clip-text text-transparent animate-pulse">
+            <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent animate-pulse">
               Tomorrow's
             </span>
             <span className="block text-white">Intelligence</span>
@@ -120,7 +120,7 @@ export const Hero = () => {
               <Button 
                 size="lg"
                 onClick={() => navigate("/starter-kits")}
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-black font-bold text-lg px-8 py-6 rounded-xl border-2 border-cyan-400/50 shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] transition-all duration-300"
+                className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white font-bold text-lg px-8 py-6 rounded-2xl border-2 border-blue-400/50 shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] transition-all duration-300"
                 style={{ fontFamily: 'Space Grotesk, sans-serif' }}
               >
                 <Zap className="w-5 h-5 mr-2" />
@@ -135,7 +135,7 @@ export const Hero = () => {
               <Button 
                 size="lg"
                 onClick={() => navigate("/innobot")}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold text-lg px-8 py-6 rounded-xl border-2 border-purple-400/50 shadow-[0_0_20px_rgba(147,51,234,0.3)] hover:shadow-[0_0_30px_rgba(147,51,234,0.5)] transition-all duration-300"
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold text-lg px-8 py-6 rounded-2xl border-2 border-purple-400/50 shadow-[0_0_20px_rgba(147,51,234,0.3)] hover:shadow-[0_0_30px_rgba(147,51,234,0.5)] transition-all duration-300"
                 style={{ fontFamily: 'Space Grotesk, sans-serif' }}
               >
                 <Bot className="w-5 h-5 mr-2" />
@@ -144,7 +144,7 @@ export const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Floating Robot SVG */}
+          {/* Floating Robot Logo */}
           <motion.div 
             className="relative mx-auto w-64 h-64 md:w-80 md:h-80"
             variants={itemVariants}
@@ -157,13 +157,18 @@ export const Hero = () => {
               ease: "easeInOut"
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
-            <div className="relative w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border border-gray-700 flex items-center justify-center shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-cyan-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
+            <div className="relative w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl border border-gray-700 flex items-center justify-center shadow-2xl">
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                className="w-40 h-40 md:w-48 md:h-48 rounded-3xl overflow-hidden bg-white/10 backdrop-blur-sm flex items-center justify-center"
               >
-                <CircuitBoard className="w-32 h-32 text-cyan-400" />
+                <img 
+                  src="https://i.postimg.cc/CMNN97jZ/INNO-LOGO-FINAL.png"
+                  alt="Innobotix Logo"
+                  className="w-32 h-32 md:w-40 md:h-40 object-contain"
+                />
               </motion.div>
               
               {/* Floating tech icons */}

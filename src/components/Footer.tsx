@@ -39,15 +39,15 @@ export const Footer = () => {
               onClick={() => navigate("/")}
               whileHover={{ scale: 1.02 }}
             >
-              <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl flex items-center justify-center group-hover:shadow-lg group-hover:shadow-cyan-500/30 transition-all duration-300">
-                <Bot className="w-7 h-7 text-white" />
-              </div>
-              <span 
-                className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"
-                style={{ fontFamily: 'Orbitron, monospace' }}
-              >
-                Innobotix
-              </span>
+                                                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 rounded-2xl flex items-center justify-center group-hover:shadow-lg group-hover:shadow-blue-500/30 transition-all duration-300">
+              <Bot className="w-7 h-7 text-white" />
+            </div>
+            <span 
+              className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent"
+              style={{ fontFamily: 'Orbitron, monospace' }}
+            >
+              Innobotix
+            </span>
             </motion.div>
             <p 
               className="text-gray-400 max-w-md leading-relaxed text-lg"
