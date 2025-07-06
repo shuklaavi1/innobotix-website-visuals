@@ -361,7 +361,7 @@ User question: ${text}`
       </div>
 
       {/* Input Area */}
-      <div className="fixed bottom-0 left-0 right-0 z-20 bg-[#0d0d0d]/95 backdrop-blur-xl border-t border-white/10 p-6 max-md:p-4">
+      <div className="fixed bottom-0 left-0 right-0 z-20 bg-[#0d0d0d]/95 backdrop-blur-xl border-t border-white/10 p-6 max-md:px-3 max-md:py-4">
         {/* Limit Warning */}
         {isLimitReached && (
           <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-center mb-4 text-sm animate-[shake_0.5s_ease-in-out] max-w-4xl mx-auto">
@@ -369,8 +369,8 @@ User question: ${text}`
           </div>
         )}
 
-        <div className="flex gap-4 max-w-4xl mx-auto items-end max-md:flex-col max-md:gap-3">
-          <div className="flex-1 relative">
+        <div className="flex gap-4 max-w-4xl mx-auto items-end max-md:flex-col max-md:gap-3 max-md:w-full max-md:mx-0">
+          <div className="flex-1 relative max-md:w-full">
             <textarea
               ref={inputRef}
               value={inputValue}
@@ -379,14 +379,14 @@ User question: ${text}`
               placeholder="Ask about robotics, Arduino, circuits, sensors..."
               rows={1}
               disabled={isLimitReached}
-              className="w-full bg-[#1a1a1a]/80 border-2 border-white/10 rounded-xl px-5 py-4 text-white text-base font-['Inter'] resize-none min-h-[52px] max-h-[120px] transition-all duration-300 backdrop-blur-xl focus:outline-none focus:border-[#00ff88] focus:shadow-lg focus:shadow-[#00ff88]/30 disabled:opacity-50 placeholder:text-gray-500"
+              className="w-full bg-[#1a1a1a]/80 border-2 border-white/10 rounded-xl px-5 py-4 text-white text-base font-['Inter'] resize-none min-h-[52px] max-h-[120px] transition-all duration-300 backdrop-blur-xl focus:outline-none focus:border-[#00ff88] focus:shadow-lg focus:shadow-[#00ff88]/30 disabled:opacity-50 placeholder:text-gray-500 max-md:min-h-[48px]"
               style={{ height: 'auto' }}
             />
           </div>
           <button
             onClick={sendMessage}
             disabled={isLimitReached || isLoading || !inputValue.trim()}
-            className="bg-gradient-to-r from-[#00ff88] to-[#00b4ff] text-black px-6 py-4 rounded-xl text-base font-semibold cursor-pointer transition-all duration-300 min-h-[52px] flex items-center gap-2 shadow-lg shadow-[#00ff88]/30 hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-[#00ff88]/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none max-md:w-full max-md:justify-center"
+            className="bg-gradient-to-r from-[#00ff88] to-[#00b4ff] text-black px-6 py-4 rounded-xl text-base font-semibold cursor-pointer transition-all duration-300 min-h-[52px] flex items-center gap-2 shadow-lg shadow-[#00ff88]/30 hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-[#00ff88]/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none max-md:w-full max-md:justify-center max-md:min-h-[48px] max-md:py-3"
           >
             {isLoading ? (
               <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
