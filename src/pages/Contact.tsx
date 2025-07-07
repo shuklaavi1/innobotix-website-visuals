@@ -104,7 +104,7 @@ const Contact = () => {
         <div className="absolute w-1 h-1 bg-cyan-400 rounded-full animate-pulse" style={{top: '20%', left: '10%', animationDelay: '0s'}}></div>
         <div className="absolute w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{top: '50%', left: '80%', animationDelay: '1s'}}></div>
         <div className="absolute w-1 h-1 bg-green-400 rounded-full animate-pulse" style={{top: '80%', left: '30%', animationDelay: '2s'}}></div>
-        <div className="absolute w-1 h-1 bg-pink-400 rounded-full animate-pulse" style={{top: '30%', left: '70%', animationDelay: '1.5s'}}></div>
+        <div className="absolute w-1 h-1 bg-blue-400 rounded-full animate-pulse" style={{top: '30%', left: '70%', animationDelay: '1.5s'}}></div>
       </div>
 
       <div className="relative z-10">
@@ -146,7 +146,7 @@ const Contact = () => {
             >
               {/* Contact Form */}
               <motion.div variants={itemVariants}>
-                <Card className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-blue-400/30 shadow-[0_0_30px_rgba(59,130,246,0.3)]">
+                <Card className="bg-black/80 backdrop-blur-xl border border-gray-800/50 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
                   <CardHeader>
                     <CardTitle className="text-2xl text-white flex items-center gap-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
                       <MessageCircle className="w-6 h-6 text-cyan-400" />
@@ -168,7 +168,7 @@ const Contact = () => {
                             value={formData.name}
                             onChange={handleChange}
                             placeholder="Enter your name"
-                            className="bg-gray-800/50 border-cyan-400/30 focus:border-cyan-400 text-white placeholder-gray-400"
+                            className="bg-gray-900/50 border-gray-700 focus:border-cyan-400 text-white placeholder-gray-400"
                           />
                         </div>
                         <div>
@@ -183,7 +183,7 @@ const Contact = () => {
                             value={formData.email}
                             onChange={handleChange}
                             placeholder="Enter your email"
-                            className="bg-gray-800/50 border-cyan-400/30 focus:border-cyan-400 text-white placeholder-gray-400"
+                            className="bg-gray-900/50 border-gray-700 focus:border-cyan-400 text-white placeholder-gray-400"
                           />
                         </div>
                       </div>
@@ -200,7 +200,7 @@ const Contact = () => {
                           value={formData.subject}
                           onChange={handleChange}
                           placeholder="What's this about?"
-                          className="bg-gray-800/50 border-cyan-400/30 focus:border-cyan-400 text-white placeholder-gray-400"
+                          className="bg-gray-900/50 border-gray-700 focus:border-cyan-400 text-white placeholder-gray-400"
                         />
                       </div>
 
@@ -216,7 +216,7 @@ const Contact = () => {
                           value={formData.message}
                           onChange={handleChange}
                           placeholder="Tell us more about your inquiry..."
-                          className="bg-gray-800/50 border-cyan-400/30 focus:border-cyan-400 text-white placeholder-gray-400"
+                          className="bg-gray-900/50 border-gray-700 focus:border-cyan-400 text-white placeholder-gray-400"
                         />
                       </div>
 
@@ -236,7 +236,7 @@ const Contact = () => {
 
               {/* Contact Info */}
               <motion.div className="space-y-8" variants={itemVariants}>
-                <Card className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-purple-400/30 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+                <Card className="bg-black/80 backdrop-blur-xl border border-gray-800/50 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
                       <Mail className="w-5 h-5 text-purple-400" />
@@ -259,7 +259,7 @@ const Contact = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border border-green-400/30 shadow-[0_0_30px_rgba(34,197,94,0.3)]">
+                <Card className="bg-black/80 backdrop-blur-xl border border-gray-800/50 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
                       <Users className="w-5 h-5 text-green-400" />
@@ -282,7 +282,7 @@ const Contact = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-xl border border-purple-400/50 shadow-[0_0_30px_rgba(147,51,234,0.3)]">
+                <Card className="bg-black/80 backdrop-blur-xl border border-gray-800/50 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
                       <Headphones className="w-5 h-5 text-purple-400" />
@@ -292,7 +292,7 @@ const Contact = () => {
                       For urgent technical support or order issues, reach out to us directly.
                     </p>
                     <Button 
-                      className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold px-6 py-3 rounded-xl border border-purple-400/50 shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_25px_rgba(147,51,234,0.5)] transition-all duration-300"
+                      className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white font-bold px-6 py-3 rounded-xl border border-blue-400/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] transition-all duration-300"
                       style={{ fontFamily: 'Space Grotesk, sans-serif' }}
                     >
                       WhatsApp Support
