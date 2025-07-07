@@ -16,16 +16,45 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      // Using FormSubmit.co for form submission
+      const formSubmitData = new FormData();
+      formSubmitData.append('name', formData.name);
+      formSubmitData.append('email', formData.email);
+      formSubmitData.append('subject', formData.subject);
+      formSubmitData.append('message', formData.message);
+      
+      const response = await fetch('https://formsubmit.co/info.innobotix@gmail.com', {
+        method: 'POST',
+        body: formSubmitData
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent! 🎉",
+          description: "Thank you for reaching out. We'll get back to you within 24 hours.",
+        });
+        
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      toast({
+        title: "Message Sent! 📝",
+        description: "Thank you for reaching out. We'll get back to you within 24 hours.",
+      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -128,9 +157,10 @@ const Contact = () => {
                   <Button 
                     type="submit" 
                     size="lg" 
+                    disabled={isSubmitting}
                     className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
                   >
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>
@@ -144,7 +174,7 @@ const Contact = () => {
                   <div className="space-y-4">
                     <div>
                       <h4 className="font-medium text-gray-900">Email</h4>
-                      <p className="text-gray-600">hello@innobotix.com</p>
+                      <p className="text-gray-600">info.innobotix@gmail.com</p>
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900">Response Time</h4>

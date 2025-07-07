@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -66,7 +65,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
       formSubmitData.append('quantity', formData.quantity.toString());
       
       // Updated email address
-      const response = await fetch('https://formsubmit.co/hustlewithavi1@gmail.com', {
+      const response = await fetch('https://formsubmit.co/info.innobotix@gmail.com', {
         method: 'POST',
         body: formSubmitData
       });
