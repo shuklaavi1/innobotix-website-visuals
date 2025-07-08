@@ -694,7 +694,7 @@ User question: ${currentInput}`
       <Footer />
 
       {/* Custom Styles */}
-      <style jsx>{`
+      <style>{`
         .typing-dot {
           width: 6px;
           height: 6px;
