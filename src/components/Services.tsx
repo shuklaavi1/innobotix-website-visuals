@@ -11,6 +11,17 @@ export const Services = () => {
 
   const services = [
     {
+      title: "Innobot AI",
+      description: "Your Robotics AI Buddy",
+      icon: <Bot className="w-8 h-8" />,
+      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
+      features: ["Doubt Solving", "Kit Guidance", "Project Ideas", "Community Chat", "24/7 Availability"],
+      cta: "Try Beta",
+      href: "/innobot",
+      badge: "Beta Version",
+      gradient: "from-violet-600 to-purple-600"
+    },
+    {
       title: "Pre-made Projects",
       description: "Plug-n-Play Projects for Schools & Colleges",
       icon: <Book className="w-8 h-8" />,
@@ -18,7 +29,8 @@ export const Services = () => {
       features: ["Line Follower Robot", "Obstacle Avoider", "Voice Controller", "Smart Home Kit", "IoT Weather Station"],
       cta: "Explore Projects",
       href: "/projects",
-      badge: "Popular"
+      badge: "Popular",
+      gradient: "from-blue-600 to-cyan-500"
     },
     {
       title: "Custom Builds",
@@ -28,17 +40,8 @@ export const Services = () => {
       features: ["Submit Your Idea", "Talk to Engineer", "Receive Custom Robot", "Full Documentation", "Ongoing Support"],
       cta: "Submit Idea",
       href: "/custom-builds",
-      badge: "Custom"
-    },
-    {
-      title: "Innobot AI",
-      description: "Your Robotics AI Buddy",
-      icon: <Bot className="w-8 h-8" />,
-      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
-      features: ["Doubt Solving", "Kit Guidance", "Project Ideas", "Community Chat", "24/7 Availability"],
-      cta: "Try Beta",
-      href: "/innobot",
-      badge: "Beta Version"
+      badge: "Custom",
+      gradient: "from-green-600 to-emerald-500"
     }
   ];
 
@@ -51,7 +54,7 @@ export const Services = () => {
             Our Services
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            From ready-made solutions to custom builds, we've got everything to power your robotics journey.
+            From AI assistance to ready-made solutions and custom builds, we've got everything to power your robotics journey.
           </p>
         </div>
 
@@ -61,7 +64,9 @@ export const Services = () => {
             <CarouselContent className="-ml-4">
               {services.map((service, index) => (
                 <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                  <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 shadow-lg overflow-hidden h-full">
+                  <Card className={`group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 shadow-lg overflow-hidden h-full ${
+                    index === 0 ? 'ring-2 ring-violet-500/30 shadow-violet-500/20' : ''
+                  }`}>
                     {/* Image */}
                     <div className="relative h-48 overflow-hidden">
                       <img 
@@ -74,15 +79,17 @@ export const Services = () => {
                       {/* Badge */}
                       <div className="absolute top-4 right-4">
                         <Badge className={`${
-                          service.badge === 'Beta Version' ? 'bg-orange-500' : 
-                          service.badge === 'Custom' ? 'bg-purple-500' : 'bg-green-500'
-                        } text-white`}>
+                          service.badge === 'Beta Version' ? 'bg-violet-500' : 
+                          service.badge === 'Custom' ? 'bg-green-500' : 'bg-blue-500'
+                        } text-white shadow-lg`}>
                           {service.badge}
                         </Badge>
                       </div>
 
                       {/* Icon */}
-                      <div className="absolute bottom-4 left-4 bg-white rounded-lg p-3 text-blue-600">
+                      <div className={`absolute bottom-4 left-4 bg-white rounded-lg p-3 shadow-lg ${
+                        index === 0 ? 'text-violet-600' : 'text-blue-600'
+                      }`}>
                         {service.icon}
                       </div>
                     </div>
@@ -97,7 +104,9 @@ export const Services = () => {
                       <div className="space-y-2 flex-1">
                         {service.features.map((feature, idx) => (
                           <div key={idx} className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div className={`w-2 h-2 rounded-full ${
+                              index === 0 ? 'bg-violet-500' : 'bg-blue-500'
+                            }`}></div>
                             <span className="text-sm text-gray-700">{feature}</span>
                           </div>
                         ))}
@@ -106,7 +115,7 @@ export const Services = () => {
                       {/* CTA */}
                       <Button 
                         onClick={() => navigate(service.href)}
-                        className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 mt-auto"
+                        className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 mt-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105`}
                       >
                         {service.cta}
                       </Button>
