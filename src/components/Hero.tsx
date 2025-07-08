@@ -86,15 +86,15 @@ export const Hero = () => {
         >
           {/* Main Headline */}
           <motion.h1 
-            className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8"
             variants={itemVariants}
             style={{ fontFamily: 'Orbitron, monospace' }}
           >
-            <span className="block text-white">🚀 Kickstart Your</span>
+            <span className="block text-white">Engineering</span>
             <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent animate-pulse">
-              Robotics Journey
+              Tomorrow's
             </span>
-            <span className="block text-white">with Innobotix!</span>
+            <span className="block text-white">Intelligence</span>
           </motion.h1>
           
           {/* Subtitle */}
@@ -103,7 +103,9 @@ export const Hero = () => {
             variants={itemVariants}
             style={{ fontFamily: 'Space Grotesk, sans-serif' }}
           >
-            Build 10+ exciting real-world projects, learn AI basics, and become a certified robotics builder — all in one affordable DIY kit.
+            Build, Customize, and Interact with Real Robots + AI. 
+            <br className="hidden md:block" />
+            Professional-grade kits and custom solutions for the next generation.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -122,7 +124,7 @@ export const Hero = () => {
                 style={{ fontFamily: 'Space Grotesk, sans-serif' }}
               >
                 <Zap className="w-5 h-5 mr-2" />
-                Get Your Kit Now →
+                Shop Kits
               </Button>
             </motion.div>
             
@@ -206,7 +208,7 @@ export const Hero = () => {
             variants={containerVariants}
           >
             {[
-              { number: "10+", label: "Real Projects", icon: <Cpu className="w-6 h-6" /> },
+              { number: "5+", label: "AI-Integrated Kits", icon: <Cpu className="w-6 h-6" /> },
               { number: "100+", label: "Students Empowered", icon: <Zap className="w-6 h-6" /> },
               { number: "24/7", label: "AI Assistant", icon: <Bot className="w-6 h-6" /> }
             ].map((stat, index) => (
