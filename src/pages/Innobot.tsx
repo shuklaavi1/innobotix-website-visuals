@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -34,6 +35,7 @@ const Innobot = () => {
   const [copied, setCopied] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const aiCapabilities: AICapability[] = [
     {
@@ -91,7 +93,7 @@ const Innobot = () => {
     } else {
       const welcomeMessage: Message = {
         id: '1',
-        text: "👋 Welcome to Innobot Enterprise! I'm your advanced AI assistant built for the next generation of robotics engineers. Ready to build something extraordinary?",
+        text: "👋 Welcome to Innobot! I'm your AI assistant for robotics, Arduino, and electronics. Ready to help you build something amazing?",
         isUser: false,
         timestamp: new Date()
       };
@@ -103,10 +105,19 @@ const Innobot = () => {
     }
   }, []);
 
-  // Auto-scroll and save
+  // Smooth scroll to bottom when new messages arrive
+  const scrollToBottom = () => {
+    if (messagesEndRef.current && chatContainerRef.current) {
+      messagesEndRef.current.scrollIntoView({ 
+        behavior: "smooth",
+        block: "end"
+      });
+    }
+  };
+
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    scrollToBottom();
+  }, [messages, isTyping]);
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -127,7 +138,6 @@ const Innobot = () => {
     if (!emailConfirmed || !userEmail) return;
 
     try {
-      // In a real implementation, you'd call your backend API
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
@@ -151,9 +161,19 @@ const Innobot = () => {
     return false;
   };
 
+  // Clean markdown from API response
+  const cleanMarkdownResponse = (text: string): string => {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove **bold** formatting
+      .replace(/\*(.*?)\*/g, '$1') // Remove *italic* formatting
+      .replace(/`(.*?)`/g, '$1') // Remove `code` formatting
+      .replace(/#{1,6}\s*(.*)/g, '$1') // Remove # headers
+      .trim();
+  };
+
   const typeWriter = (text: string, callback: (currentText: string) => void) => {
     let i = 0;
-    const speed = 8; // Faster typing for premium feel
+    const speed = 20;
     
     const type = () => {
       if (i < text.length) {
@@ -198,7 +218,7 @@ const Innobot = () => {
     setMessages(prev => [...prev, aiMessage]);
 
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_GEMINI_API_KEY`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyA5W6cpU5fEqQbjp1Or0R6snHwIHwKrj2k`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -206,7 +226,9 @@ const Innobot = () => {
         body: JSON.stringify({
           contents: [{
             parts: [{
-              text: `You are Innobot Enterprise, an elite AI assistant for professional robotics engineers and startup founders. Provide expert-level, detailed responses with code examples when applicable. Be professional yet innovative. Question: ${currentInput}`
+              text: `You are Innobot, an expert AI assistant specializing in robotics, Arduino, electronics, and engineering. Provide clear, concise, and helpful answers. Use technical accuracy while keeping explanations accessible. Do not use markdown formatting in your response.
+
+User question: ${currentInput}`
             }]
           }],
           generationConfig: {
@@ -224,10 +246,11 @@ const Innobot = () => {
 
       const data = await response.json();
       
-      let aiResponse = "I'm experiencing technical difficulties. Our engineering team has been notified.";
+      let aiResponse = "I'm having trouble processing your request right now. Please try again.";
       
       if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
-        aiResponse = data.candidates[0].content.parts[0].text;
+        const rawResponse = data.candidates[0].content.parts[0].text;
+        aiResponse = cleanMarkdownResponse(rawResponse);
       }
 
       typeWriter(aiResponse, (currentText) => {
@@ -254,7 +277,7 @@ const Innobot = () => {
 
     } catch (error) {
       console.error('Error calling Gemini API:', error);
-      const errorMessage = "I apologize for the technical issue. Our team is working on a fix.";
+      const errorMessage = "I'm having trouble connecting right now. Please check your connection and try again.";
       
       typeWriter(errorMessage, (currentText) => {
         setMessages(prev => 
@@ -280,7 +303,7 @@ const Innobot = () => {
   const clearChat = () => {
     const welcomeMessage: Message = {
       id: '1',
-      text: "👋 Welcome to Innobot Enterprise! I'm your advanced AI assistant built for the next generation of robotics engineers. Ready to build something extraordinary?",
+      text: "👋 Welcome to Innobot! I'm your AI assistant for robotics, Arduino, and electronics. Ready to help you build something amazing?",
       isUser: false,
       timestamp: new Date()
     };
@@ -323,9 +346,9 @@ const Innobot = () => {
       <div className="sticky top-16 z-40 bg-black/50 backdrop-blur-xl border-b border-white/5 py-2">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1">
-              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-              <span className="text-emerald-400 text-xs font-medium">Production Ready</span>
+            <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-3 py-1">
+              <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+              <span className="text-amber-400 text-xs font-medium">Beta Version</span>
             </div>
             <div className="hidden md:flex items-center gap-2 text-white/60 text-xs">
               <Globe className="w-3 h-3" />
@@ -357,49 +380,44 @@ const Innobot = () => {
       </div>
 
       {/* Hero Section */}
-      <div className="relative z-10 text-center py-16 px-4 border-b border-white/5">
+      <div className="relative z-10 text-center py-8 md:py-16 px-4 border-b border-white/5">
         <div className="max-w-6xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8 backdrop-blur-sm">
-            <Star className="w-4 h-4 text-yellow-400" />
-            <span className="text-white/80 text-sm font-medium">Trusted by 10,000+ Engineers</span>
-          </div>
-
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight tracking-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold mb-6 leading-tight tracking-tight">
             <span className="block text-white">Innobot</span>
             <span className="block bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-              Enterprise
+              AI Assistant
             </span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-white/70 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
-            The AI assistant that scales with your robotics startup. From prototype to production.
+          <p className="text-lg md:text-xl text-white/70 mb-8 max-w-3xl mx-auto leading-relaxed font-light">
+            Your AI assistant for robotics, Arduino, and electronics. Ask me anything!
           </p>
 
           {/* Metrics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-8">
             {[
               { value: "99.9%", label: "Model Accuracy" },
               { value: "<50ms", label: "Response Time" },
               { value: "24/7", label: "Availability" },
-              { value: "Enterprise", label: "Security" }
+              { value: "Beta", label: "Version" }
             ].map((metric, index) => (
               <div key={index} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-white mb-1">{metric.value}</div>
-                <div className="text-sm text-white/60">{metric.label}</div>
+                <div className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1">{metric.value}</div>
+                <div className="text-xs md:text-sm text-white/60">{metric.label}</div>
               </div>
             ))}
           </div>
 
           {/* CTA Row */}
           <div className="flex items-center justify-center gap-4 flex-wrap">
-            <div className="bg-gradient-to-r from-violet-500/20 to-cyan-500/20 border border-violet-500/30 rounded-2xl px-6 py-3 backdrop-blur-sm">
-              <span className="text-violet-400 font-semibold text-lg">
+            <div className="bg-gradient-to-r from-violet-500/20 to-cyan-500/20 border border-violet-500/30 rounded-2xl px-4 md:px-6 py-3 backdrop-blur-sm">
+              <span className="text-violet-400 font-semibold text-base md:text-lg">
                 {remainingQuestions} questions remaining
               </span>
             </div>
             <button
               onClick={clearChat}
-              className="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl px-6 py-3 transition-all duration-300 hover:scale-105"
+              className="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl px-4 md:px-6 py-3 transition-all duration-300 hover:scale-105"
             >
               <span className="text-white/80">New Session</span>
             </button>
@@ -411,22 +429,22 @@ const Innobot = () => {
       <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         {/* AI Capabilities */}
         {showCapabilities && messages.length <= 1 && (
-          <div className="px-4 py-12">
+          <div className="px-4 py-8 md:py-12">
             <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                  Enterprise AI Capabilities
+              <div className="text-center mb-8 md:mb-12">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+                  AI Capabilities
                 </h2>
-                <p className="text-white/60 text-lg max-w-2xl mx-auto">
-                  Production-grade AI assistance for professional robotics development
+                <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto">
+                  Professional AI assistance for robotics development
                 </p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12">
                 {aiCapabilities.map((capability, index) => (
                   <div
                     key={index}
-                    className="group bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm hover:bg-white/10 transition-all duration-500 hover:scale-105 hover:border-violet-500/30"
+                    className="group bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 backdrop-blur-sm hover:bg-white/10 transition-all duration-500 hover:scale-105 hover:border-violet-500/30"
                   >
                     <div className="flex items-center gap-4 mb-6">
                       <div className="p-3 bg-gradient-to-br from-violet-500/20 to-cyan-500/20 rounded-2xl border border-violet-500/30 group-hover:border-violet-400/50 transition-all">
@@ -456,8 +474,8 @@ const Innobot = () => {
               </div>
 
               {/* Quick Actions */}
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm">
-                <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 backdrop-blur-sm">
+                <h3 className="text-lg md:text-xl font-semibold text-white mb-6 flex items-center gap-2">
                   <Play className="w-5 h-5 text-cyan-400" />
                   Quick Start Templates
                 </h3>
@@ -473,7 +491,7 @@ const Innobot = () => {
                       onClick={() => handleQuickStart(template)}
                       className="text-left p-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all duration-200 hover:border-cyan-400/50 group"
                     >
-                      <span className="text-white/90 group-hover:text-cyan-300">{template}</span>
+                      <span className="text-white/90 group-hover:text-cyan-300 text-sm">{template}</span>
                     </button>
                   ))}
                 </div>
@@ -483,31 +501,35 @@ const Innobot = () => {
         )}
 
         {/* Chat Messages */}
-        <div className="flex-1 overflow-y-auto px-4 py-6 custom-scrollbar" style={{ paddingBottom: '180px' }}>
-          <div className="max-w-5xl mx-auto space-y-8">
+        <div 
+          ref={chatContainerRef}
+          className="flex-1 overflow-y-auto px-4 py-6 custom-scrollbar" 
+          style={{ paddingBottom: '120px' }}
+        >
+          <div className="max-w-5xl mx-auto space-y-6 md:space-y-8">
             {messages.map((message, index) => (
               <div
                 key={message.id}
                 className={`flex animate-slide-in ${message.isUser ? 'justify-end' : 'justify-start'}`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className={`flex items-start space-x-4 max-w-[85%] md:max-w-[75%] ${message.isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg backdrop-blur-sm ${
+                <div className={`flex items-start space-x-3 md:space-x-4 max-w-[90%] md:max-w-[85%] lg:max-w-[75%] ${message.isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                  <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg backdrop-blur-sm ${
                     message.isUser 
                       ? 'bg-gradient-to-br from-violet-500 to-purple-600 border border-violet-400/30' 
                       : 'bg-gradient-to-br from-gray-800 to-gray-900 border border-cyan-400/30'
                   }`}>
-                    {message.isUser ? <User className="w-6 h-6" /> : <Bot className="w-6 h-6" />}
+                    {message.isUser ? <User className="w-5 h-5 md:w-6 md:h-6" /> : <Bot className="w-5 h-5 md:w-6 md:h-6" />}
                   </div>
                   
-                  <div className={`relative rounded-3xl p-6 backdrop-blur-sm shadow-xl transition-all duration-300 hover:scale-[1.02] border ${
+                  <div className={`relative rounded-3xl p-4 md:p-6 backdrop-blur-sm shadow-xl transition-all duration-300 hover:scale-[1.02] border ${
                     message.isUser 
                       ? 'bg-gradient-to-br from-violet-500/20 to-purple-600/20 border-violet-400/30' 
                       : 'bg-white/5 border-white/10'
                   }`}>
-                    <p className="whitespace-pre-wrap leading-relaxed text-base text-white/90">{message.text}</p>
+                    <p className="whitespace-pre-wrap leading-relaxed text-sm md:text-base text-white/90">{message.text}</p>
                     
-                    <div className="flex items-center justify-between mt-4 text-xs text-white/50">
+                    <div className="flex items-center justify-between mt-3 md:mt-4 text-xs text-white/50">
                       <span className="font-mono">{message.timestamp.toLocaleTimeString()}</span>
                       
                       <div className="flex items-center gap-2">
@@ -536,11 +558,11 @@ const Innobot = () => {
             {/* Typing Indicator */}
             {isLoading && (
               <div className="flex justify-start animate-slide-in">
-                <div className="flex items-start space-x-4 max-w-[85%] md:max-w-[75%]">
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 border border-cyan-400/30 backdrop-blur-sm">
-                    <Bot className="w-6 h-6" />
+                <div className="flex items-start space-x-3 md:space-x-4 max-w-[90%] md:max-w-[85%] lg:max-w-[75%]">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 border border-cyan-400/30 backdrop-blur-sm">
+                    <Bot className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm">
+                  <div className="bg-white/5 border border-white/10 rounded-3xl p-4 md:p-6 backdrop-blur-sm">
                     <div className="flex items-center space-x-3">
                       <div className="flex space-x-1">
                         <div className="typing-dot bg-gradient-to-r from-violet-400 to-cyan-400"></div>
@@ -549,7 +571,7 @@ const Innobot = () => {
                       </div>
                       <span className="text-sm text-violet-400 font-medium flex items-center gap-2">
                         <Brain className="w-4 h-4 animate-pulse" />
-                        Processing with enterprise AI...
+                        Processing...
                       </span>
                     </div>
                   </div>
@@ -563,7 +585,7 @@ const Innobot = () => {
       </div>
 
       {/* Enhanced Input Area */}
-      <div className="fixed bottom-0 left-0 right-0 bg-black/50 backdrop-blur-xl border-t border-white/10 p-6 z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-black/50 backdrop-blur-xl border-t border-white/10 p-4 md:p-6 z-50">
         <div className="max-w-5xl mx-auto">
           {promptCount >= 10 && (
             <div className="mb-4 p-4 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-2xl text-center backdrop-blur-sm">
@@ -571,11 +593,11 @@ const Innobot = () => {
                 <Shield className="w-5 h-5 text-red-400" />
                 <span className="text-red-300 text-lg font-semibold">Rate Limit Reached</span>
               </div>
-              <p className="text-red-200 text-sm">Contact us for enterprise access with unlimited queries.</p>
+              <p className="text-red-200 text-sm">You've reached the beta limit of 10 questions.</p>
             </div>
           )}
           
-          <div className="flex space-x-4 items-end">
+          <div className="flex space-x-3 md:space-x-4 items-end">
             <div className="flex-1 relative">
               <textarea
                 ref={textareaRef}
@@ -583,10 +605,10 @@ const Innobot = () => {
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about robotics, AI, circuits, or system architecture..."
-                className="w-full bg-white/5 border-2 border-white/20 focus:border-violet-400/50 focus:ring-2 focus:ring-violet-500/20 text-white placeholder-white/40 resize-none rounded-2xl p-4 pr-12 backdrop-blur-sm transition-all duration-300 focus:shadow-lg focus:shadow-violet-500/20"
+                className="w-full bg-white/5 border-2 border-white/20 focus:border-violet-400/50 focus:ring-2 focus:ring-violet-500/20 text-white placeholder-white/40 resize-none rounded-2xl p-3 md:p-4 pr-12 backdrop-blur-sm transition-all duration-300 focus:shadow-lg focus:shadow-violet-500/20 text-sm md:text-base"
                 disabled={isLoading || promptCount >= 10}
                 rows={1}
-                style={{ minHeight: '64px', maxHeight: '150px' }}
+                style={{ minHeight: '52px', maxHeight: '120px' }}
               />
               <div className="absolute right-3 bottom-3 flex items-center gap-2">
                 <div className="text-xs text-white/40 font-mono">
@@ -598,13 +620,13 @@ const Innobot = () => {
             <button
               onClick={handleSendMessage}
               disabled={!inputText.trim() || isLoading || promptCount >= 10}
-              className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 shadow-2xl shadow-violet-500/40 px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105 disabled:hover:scale-100 disabled:opacity-50 flex items-center space-x-3 font-semibold text-lg min-h-[64px] border border-violet-400/30"
+              className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 shadow-2xl shadow-violet-500/40 px-6 md:px-8 py-3 md:py-4 rounded-2xl transition-all duration-300 hover:scale-105 disabled:hover:scale-100 disabled:opacity-50 flex items-center space-x-2 md:space-x-3 font-semibold text-base md:text-lg min-h-[52px] border border-violet-400/30"
             >
               {isLoading ? (
-                <Loader2 className="w-6 h-6 animate-spin" />
+                <Loader2 className="w-5 h-5 md:w-6 md:h-6 animate-spin" />
               ) : (
                 <>
-                  <Send className="w-5 h-5" />
+                  <Send className="w-4 h-4 md:w-5 md:h-5" />
                   <span className="hidden sm:inline">Send</span>
                 </>
               )}
@@ -612,18 +634,18 @@ const Innobot = () => {
           </div>
           
           {/* Enhanced Footer */}
-          <div className="flex items-center justify-between mt-4 text-sm text-white/40">
-            <div className="flex items-center gap-6">
+          <div className="flex items-center justify-between mt-4 text-xs md:text-sm text-white/40">
+            <div className="flex items-center gap-4 md:gap-6">
               <span className="flex items-center gap-1">
-                <Sparkles className="w-4 h-4" />
-                Powered by Gemini Pro
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4" />
+                AI Assistant
               </span>
               <span className="hidden md:inline">Press Enter to send, Shift+Enter for new line</span>
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                <span>Enterprise AI Online</span>
+                <span>AI Online</span>
               </div>
               {emailConfirmed && (
                 <div className="flex items-center gap-1 text-violet-400">
@@ -639,15 +661,15 @@ const Innobot = () => {
       {/* Email Setup Modal */}
       {showEmailModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white/10 border border-white/20 rounded-3xl p-8 max-w-md w-full backdrop-blur-xl">
-            <h3 className="text-2xl font-bold text-white mb-4">Setup Email Notifications</h3>
-            <p className="text-white/70 mb-6">Get AI responses delivered directly to your Gmail.</p>
+          <div className="bg-white/10 border border-white/20 rounded-3xl p-6 md:p-8 max-w-md w-full backdrop-blur-xl">
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-4">Setup Email Notifications</h3>
+            <p className="text-white/70 mb-6">Get AI responses delivered directly to your email.</p>
             
             <input
               type="email"
               value={userEmail}
               onChange={(e) => setUserEmail(e.target.value)}
-              placeholder="your@gmail.com"
+              placeholder="your@email.com"
               className="w-full bg-white/5 border border-white/20 rounded-xl p-3 text-white placeholder-white/40 mb-6 focus:border-violet-400/50 focus:outline-none"
             />
             
@@ -670,6 +692,51 @@ const Innobot = () => {
       )}
 
       <Footer />
+
+      {/* Custom Styles */}
+      <style jsx>{`
+        .typing-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          animation: bounce 1.4s infinite ease-in-out;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        .typing-dot:nth-child(3) { animation-delay: 0s; }
+        
+        @keyframes bounce {
+          0%, 80%, 100% { transform: scale(0); }
+          40% { transform: scale(1); }
+        }
+        
+        @keyframes slide-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-slide-in {
+          animation: slide-in 0.5s ease-out;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+          border-radius: 10px;
+        }
+      `}</style>
     </div>
   );
 };
