@@ -1,3 +1,4 @@
+
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { CertificationSection } from "@/components/CertificationSection";
@@ -71,10 +72,10 @@ const StarterKits = () => {
   ];
 
   const kitImages = [
-    "https://i.postimg.cc/6p8rDwwJ/An-Indian-teenage-boy-in-a-dark-room-opening-a-mysterious-box-labeled-INNOBOTIX-Inside-the-box-ar.png",
     "https://i.postimg.cc/DZHvTfx3/assets-task-01jzqy5da5fkavbxakvp6sn706-1752076388-img-1.webp",
     "https://i.postimg.cc/DZ9TNjz2/assets-task-01jzqydw1sfgzt661vwgqfnefb-1752076675-img-0.webp",
-    "https://i.postimg.cc/K8GyCgmg/assets-task-01jzqy1zfhemftmc2bzmq4a6kc-1752076264-img-0.webp"
+    "https://i.postimg.cc/K8GyCgmg/assets-task-01jzqy1zfhemftmc2bzmq4a6kc-1752076264-img-0.webp",
+    "https://i.postimg.cc/6p8rDwwJ/An-Indian-teenage-boy-in-a-dark-room-opening-a-mysterious-box-labeled-INNOBOTIX-Inside-the-box-ar.png"
   ];
 
   return (
@@ -101,7 +102,7 @@ const StarterKits = () => {
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Product Image Carousel */}
+              {/* Enhanced Portrait Product Image Carousel */}
               <div className="relative">
                 <div className="bg-gray-800/50 rounded-2xl p-8 shadow-2xl backdrop-blur-sm border border-gray-700/50">
                   <Carousel className="w-full max-w-lg mx-auto">
@@ -109,11 +110,19 @@ const StarterKits = () => {
                       {kitImages.map((image, index) => (
                         <CarouselItem key={index}>
                           <div className="p-1">
-                            <img 
-                              src={image}
-                              alt={`Innobotix Starter Kit View ${index + 1}`}
-                              className="w-full h-80 object-cover rounded-lg"
-                            />
+                            <div className="relative w-full h-96 bg-gradient-to-br from-gray-900/80 to-blue-900/60 rounded-lg overflow-hidden">
+                              <img 
+                                src={image}
+                                alt={`Innobotix Starter Kit View ${index + 1}`}
+                                className="absolute inset-0 w-full h-full object-contain transition-transform duration-300 hover:scale-105"
+                                style={{
+                                  objectFit: 'contain',
+                                  objectPosition: 'center'
+                                }}
+                              />
+                              {/* Subtle gradient overlay for better visual appeal */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/20 pointer-events-none"></div>
+                            </div>
                           </div>
                         </CarouselItem>
                       ))}
@@ -220,11 +229,13 @@ const StarterKits = () => {
             
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop"
-                  alt="Kit Components Laid Out"
-                  className="w-full h-80 object-cover rounded-lg shadow-lg"
-                />
+                <div className="relative w-full h-96 bg-gradient-to-br from-gray-900/80 to-blue-900/60 rounded-lg overflow-hidden shadow-lg">
+                  <img 
+                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop"
+                    alt="Kit Components Laid Out"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </div>
               </div>
               
               <div>

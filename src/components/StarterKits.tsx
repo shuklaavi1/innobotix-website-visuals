@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -45,10 +46,10 @@ export const StarterKits = () => {
   ];
 
   const kitImages = [
-    "https://i.postimg.cc/6p8rDwwJ/An-Indian-teenage-boy-in-a-dark-room-opening-a-mysterious-box-labeled-INNOBOTIX-Inside-the-box-ar.png",
-    "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=600&fit=crop"
+    "https://i.postimg.cc/DZHvTfx3/assets-task-01jzqy5da5fkavbxakvp6sn706-1752076388-img-1.webp",
+    "https://i.postimg.cc/DZ9TNjz2/assets-task-01jzqydw1sfgzt661vwgqfnefb-1752076675-img-0.webp",
+    "https://i.postimg.cc/K8GyCgmg/assets-task-01jzqy1zfhemftmc2bzmq4a6kc-1752076264-img-0.webp",
+    "https://i.postimg.cc/6p8rDwwJ/An-Indian-teenage-boy-in-a-dark-room-opening-a-mysterious-box-labeled-INNOBOTIX-Inside-the-box-ar.png"
   ];
 
   const components = [
@@ -120,18 +121,26 @@ export const StarterKits = () => {
                 </div>
               </div>
 
-              {/* Image Carousel */}
-              <div className="bg-gradient-to-br from-gray-800/50 to-blue-900/30 rounded-2xl p-6 backdrop-blur-sm border border-gray-700/30">
+              {/* Enhanced Portrait Image Carousel */}
+              <div className="bg-gradient-to-br from-gray-800/50 to-blue-900/30 rounded-2xl p-6 backdrop-blur-sm border border-gray-700/30 relative">
                 <Carousel className="w-full max-w-lg mx-auto">
                   <CarouselContent>
                     {kitImages.map((image, index) => (
                       <CarouselItem key={index}>
                         <div className="p-1">
-                          <img 
-                            src={image}
-                            alt={`Robotics Starter Kit View ${index + 1}`}
-                            className="w-full h-80 object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
-                          />
+                          <div className="relative w-full h-96 bg-gradient-to-br from-gray-900/80 to-blue-900/60 rounded-lg overflow-hidden shadow-lg">
+                            <img 
+                              src={image}
+                              alt={`Robotics Starter Kit View ${index + 1}`}
+                              className="absolute inset-0 w-full h-full object-contain hover:scale-105 transition-transform duration-300"
+                              style={{
+                                objectFit: 'contain',
+                                objectPosition: 'center'
+                              }}
+                            />
+                            {/* Subtle overlay for better contrast */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/20 pointer-events-none"></div>
+                          </div>
                         </div>
                       </CarouselItem>
                     ))}
