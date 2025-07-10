@@ -13,6 +13,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: ''
   });
@@ -37,7 +38,7 @@ const Contact = () => {
           title: "Message Sent Successfully! 🎉",
           description: "Thanks for reaching out! We'll get back to you soon.",
         });
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       } else {
         throw new Error('Form submission failed');
       }
@@ -117,6 +118,22 @@ const Contact = () => {
                         disabled={isSubmitting}
                       />
                     </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                      Phone Number
+                    </label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+91 98765 43210"
+                      className="border-blue-200 focus:border-blue-500"
+                      disabled={isSubmitting}
+                    />
                   </div>
 
                   <div>

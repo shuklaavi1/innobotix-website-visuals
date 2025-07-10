@@ -14,6 +14,7 @@ const CustomBuilds = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     projectTitle: "",
     description: "",
     budget: "",
@@ -43,6 +44,7 @@ const CustomBuilds = () => {
         setFormData({
           name: "",
           email: "",
+          phone: "",
           projectTitle: "",
           description: "",
           budget: "",
@@ -151,6 +153,22 @@ const CustomBuilds = () => {
                       disabled={isSubmitting}
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium mb-2 text-gray-300">
+                    Phone Number
+                  </label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="+91 98765 43210"
+                    className="hover:border-blue-400 focus:border-blue-500 transition-colors bg-gray-700/50 border-gray-600 text-white"
+                    disabled={isSubmitting}
+                  />
                 </div>
 
                 <div>
