@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageCircle, Users, Youtube } from "lucide-react";
+import { MessageCircle, Users, Youtube, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
@@ -16,16 +16,40 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://formspree.io/f/xyzjryzp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent Successfully! 🎉",
+          description: "Thanks for reaching out! We'll get back to you soon.",
+        });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -74,6 +98,7 @@ const Contact = () => {
                         onChange={handleChange}
                         placeholder="Enter your name"
                         className="border-blue-200 focus:border-blue-500"
+                        disabled={isSubmitting}
                       />
                     </div>
                     <div>
@@ -89,6 +114,7 @@ const Contact = () => {
                         onChange={handleChange}
                         placeholder="Enter your email"
                         className="border-blue-200 focus:border-blue-500"
+                        disabled={isSubmitting}
                       />
                     </div>
                   </div>
@@ -106,6 +132,7 @@ const Contact = () => {
                       onChange={handleChange}
                       placeholder="What's this about?"
                       className="border-blue-200 focus:border-blue-500"
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -122,15 +149,24 @@ const Contact = () => {
                       onChange={handleChange}
                       placeholder="Tell us more about your inquiry..."
                       className="border-blue-200 focus:border-blue-500"
+                      disabled={isSubmitting}
                     />
                   </div>
 
                   <Button 
                     type="submit" 
                     size="lg" 
+                    disabled={isSubmitting}
                     className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
                   >
-                    Send Message
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      'Send Message'
+                    )}
                   </Button>
                 </form>
               </CardContent>

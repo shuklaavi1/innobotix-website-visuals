@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { CustomBuildProcess } from "@/components/CustomBuildProcess";
+import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const CustomBuilds = () => {
@@ -18,38 +19,47 @@ const CustomBuilds = () => {
     budget: "",
     timeline: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Create mailto link
-    const subject = `Custom Robot Build Request - ${formData.projectTitle}`;
-    const body = `
-Name: ${formData.name}
-Email: ${formData.email}
-Project Title: ${formData.projectTitle}
-Description: ${formData.description}
-Budget Range: ${formData.budget}
-Timeline: ${formData.timeline}
-    `;
-    
-    const mailtoLink = `mailto:hustlewithavi1@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
-    
-    toast({
-      title: "Request Prepared!",
-      description: "Your email client will open with the project details. Send the email and we'll get back to you within 24 hours!",
-    });
-    
-    setFormData({
-      name: "",
-      email: "",
-      projectTitle: "",
-      description: "",
-      budget: "",
-      timeline: ""
-    });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://formspree.io/f/xldnqedn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Request Submitted Successfully! 🎉",
+          description: "Thanks for reaching out! We'll get back to you soon with a custom quote.",
+        });
+        setFormData({
+          name: "",
+          email: "",
+          projectTitle: "",
+          description: "",
+          budget: "",
+          timeline: ""
+        });
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -122,6 +132,7 @@ Timeline: ${formData.timeline}
                       required
                       placeholder="Enter your full name"
                       className="hover:border-blue-400 focus:border-blue-500 transition-colors bg-gray-700/50 border-gray-600 text-white"
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
@@ -137,6 +148,7 @@ Timeline: ${formData.timeline}
                       required
                       placeholder="your.email@example.com"
                       className="hover:border-blue-400 focus:border-blue-500 transition-colors bg-gray-700/50 border-gray-600 text-white"
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -153,6 +165,7 @@ Timeline: ${formData.timeline}
                     required
                     placeholder="Give your project a descriptive title"
                     className="hover:border-blue-400 focus:border-blue-500 transition-colors bg-gray-700/50 border-gray-600 text-white"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -169,6 +182,7 @@ Timeline: ${formData.timeline}
                     rows={5}
                     placeholder="Describe your robotics project in detail. What should it do? What features do you need? Any specific requirements?"
                     className="hover:border-blue-400 focus:border-blue-500 transition-colors bg-gray-700/50 border-gray-600 text-white"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -184,6 +198,7 @@ Timeline: ${formData.timeline}
                       onChange={handleChange}
                       placeholder="e.g., ₹10,000 - ₹50,000"
                       className="hover:border-blue-400 focus:border-blue-500 transition-colors bg-gray-700/50 border-gray-600 text-white"
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
@@ -197,15 +212,24 @@ Timeline: ${formData.timeline}
                       onChange={handleChange}
                       placeholder="e.g., 2-3 weeks"
                       className="hover:border-blue-400 focus:border-blue-500 transition-colors bg-gray-700/50 border-gray-600 text-white"
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
 
                 <Button 
                   type="submit" 
+                  disabled={isSubmitting}
                   className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-lg py-6 hover-scale glow-effect"
                 >
-                  Submit Project Idea
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    'Submit Project Idea'
+                  )}
                 </Button>
               </form>
             </CardContent>

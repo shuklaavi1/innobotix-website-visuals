@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { X, ShoppingCart } from "lucide-react";
+import { X, ShoppingCart, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface OrderFormProps {
@@ -56,25 +56,25 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
     }
 
     try {
-      // Using FormSubmit.co for form submission
-      const formSubmitData = new FormData();
-      formSubmitData.append('name', formData.fullName);
-      formSubmitData.append('email', formData.email);
-      formSubmitData.append('whatsapp', formData.whatsappNumber);
-      formSubmitData.append('address', formData.address);
-      formSubmitData.append('kit', formData.kitSelection);
-      formSubmitData.append('quantity', formData.quantity.toString());
-      
-      // Updated email address
-      const response = await fetch('https://formsubmit.co/hustlewithavi1@gmail.com', {
+      const response = await fetch('https://formspree.io/f/xqabrkaq', {
         method: 'POST',
-        body: formSubmitData
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          whatsapp: formData.whatsappNumber,
+          address: formData.address,
+          kit: formData.kitSelection,
+          quantity: formData.quantity,
+        }),
       });
 
       if (response.ok) {
         toast({
           title: "Pre-booking Confirmed! 🎉",
-          description: "Thank you for pre-booking! Your kit will be delivered within 7–10 days of payment confirmation.",
+          description: "Thanks for reaching out! We'll get back to you soon with payment details.",
         });
         
         // Reset form
@@ -92,12 +92,11 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
         throw new Error('Form submission failed');
       }
     } catch (error) {
-      // For now, show success message as FormSubmit requires email verification
       toast({
-        title: "Pre-booking Received! 📝",
-        description: "Your pre-booking details have been saved. Your kit will be delivered within 7–10 days of payment confirmation.",
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
       });
-      onClose();
     } finally {
       setIsSubmitting(false);
     }
@@ -119,6 +118,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 transition-colors"
+            disabled={isSubmitting}
           >
             <X className="w-5 h-5" />
           </button>
@@ -149,6 +149,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
                 placeholder="Enter your full name"
                 className="mt-1 rounded-lg border-gray-300 focus:border-blue-500"
                 required
+                disabled={isSubmitting}
               />
             </div>
 
@@ -165,6 +166,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
                 placeholder="your.email@example.com"
                 className="mt-1 rounded-lg border-gray-300 focus:border-blue-500"
                 required
+                disabled={isSubmitting}
               />
             </div>
 
@@ -181,6 +183,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
                 placeholder="+91 9876543210"
                 className="mt-1 rounded-lg border-gray-300 focus:border-blue-500"
                 required
+                disabled={isSubmitting}
               />
             </div>
 
@@ -196,6 +199,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
                 placeholder="Enter your complete address for delivery"
                 className="mt-1 rounded-lg border-gray-300 focus:border-blue-500 min-h-[80px]"
                 required
+                disabled={isSubmitting}
               />
             </div>
 
@@ -204,7 +208,11 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
               <Label htmlFor="kit" className="text-sm font-medium text-gray-700">
                 Select Kit *
               </Label>
-              <Select value={formData.kitSelection} onValueChange={(value) => handleInputChange('kitSelection', value)}>
+              <Select 
+                value={formData.kitSelection} 
+                onValueChange={(value) => handleInputChange('kitSelection', value)}
+                disabled={isSubmitting}
+              >
                 <SelectTrigger className="mt-1 rounded-lg border-gray-300 focus:border-blue-500">
                   <SelectValue placeholder="Choose your kit" />
                 </SelectTrigger>
@@ -228,6 +236,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
                 value={formData.quantity}
                 onChange={(e) => handleInputChange('quantity', parseInt(e.target.value) || 1)}
                 className="mt-1 rounded-lg border-gray-300 focus:border-blue-500"
+                disabled={isSubmitting}
               />
             </div>
 
@@ -253,7 +262,14 @@ export const OrderForm: React.FC<OrderFormProps> = ({ isOpen, onClose }) => {
               disabled={isSubmitting}
               className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold py-3 rounded-lg text-lg transition-all duration-300 hover:scale-105"
             >
-              {isSubmitting ? "Processing..." : "Pre-Book Now"}
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                'Pre-Book Now'
+              )}
             </Button>
           </form>
         </div>
