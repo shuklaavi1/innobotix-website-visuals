@@ -72,9 +72,9 @@ const StarterKits = () => {
 
   const kitImages = [
     "https://i.postimg.cc/6p8rDwwJ/An-Indian-teenage-boy-in-a-dark-room-opening-a-mysterious-box-labeled-INNOBOTIX-Inside-the-box-ar.png",
-    "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=600&fit=crop"
+    "https://i.postimg.cc/DZHvTfx3/assets-task-01jzqy5da5fkavbxakvp6sn706-1752076388-img-1.webp",
+    "https://i.postimg.cc/DZ9TNjz2/assets-task-01jzqydw1sfgzt661vwgqfnefb-1752076675-img-0.webp",
+    "https://i.postimg.cc/K8GyCgmg/assets-task-01jzqy1zfhemftmc2bzmq4a6kc-1752076264-img-0.webp"
   ];
 
   return (
