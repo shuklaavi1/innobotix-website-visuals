@@ -1,9 +1,10 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Bot, Zap, Cpu, CircuitBoard } from "lucide-react";
+import { ArrowDown, Bot, Zap, Cpu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import React from "react";
 
 export const Hero = () => {
   const navigate = useNavigate();
@@ -27,6 +28,18 @@ export const Hero = () => {
       transition: {
         duration: 0.8
       }
+    }
+  };
+
+  const [idea, setIdea] = React.useState("");
+
+  const submitIdea = () => {
+    const query = idea.trim();
+    if (!query) {
+      navigate("/chat");
+    } else {
+      const params = new URLSearchParams({ q: query }).toString();
+      navigate(`/chat?${params}`);
     }
   };
 
@@ -91,10 +104,7 @@ export const Hero = () => {
             style={{ fontFamily: 'Inter, ui-sans-serif, system-ui' }}
           >
             <span className="block text-white">
-              Build robotics project roadmaps within minutes
-            </span>
-            <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              with Innobotix.
+              Build robotics project roadmaps within minutes with Innobotix.
             </span>
           </motion.h1>
           
@@ -104,43 +114,35 @@ export const Hero = () => {
             variants={itemVariants}
             style={{ fontFamily: 'Inter, ui-sans-serif, system-ui' }}
           >
-            India’s next-gen AI agent platform to turn ideas into circuits, code, and real prototypes.
+            Turn your ideas into functional circuits, code, and working prototypes in minutes with AI guidance.
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* Get Started input + CTA */}
           <motion.div 
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-10"
             variants={itemVariants}
           >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button 
-                size="lg"
-                onClick={() => navigate("/innobot")}
-                className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white font-bold text-lg px-8 py-6 rounded-2xl border-2 border-blue-400/50 shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] transition-all duration-300"
-                style={{ fontFamily: 'Inter, ui-sans-serif, system-ui' }}
+            <div className="w-full max-w-3xl flex items-stretch gap-3">
+              <div className="relative flex-1">
+                <input
+                  value={idea}
+                  onChange={(e) => setIdea(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') submitIdea(); }}
+                  placeholder="Describe your robotics idea (e.g., line follower with PID, ESP32 home automation)"
+                  className="w-full bg-white/5 text-white placeholder-white/40 border-2 border-white/15 focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-500/20 rounded-2xl px-5 py-4 outline-none transition-all"
+                  aria-label="Project idea"
+                />
+                <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-cyan-400/10" />
+              </div>
+              <motion.button
+                onClick={submitIdea}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="shrink-0 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white font-semibold px-6 md:px-8 rounded-2xl border border-cyan-300/30 shadow-[0_0_20px_rgba(0,191,255,0.35)] transition-all"
               >
-                <Zap className="w-5 h-5 mr-2" />
-                Start Your Project
-              </Button>
-            </motion.div>
-            
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button 
-                size="lg"
-                onClick={() => navigate("/starter-kits")}
-                className="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white font-bold text-lg px-8 py-6 rounded-2xl border-2 border-gray-600/50 transition-all duration-300"
-                style={{ fontFamily: 'Inter, ui-sans-serif, system-ui' }}
-              >
-                <Bot className="w-5 h-5 mr-2" />
-                Explore Starter Kits
-              </Button>
-            </motion.div>
+                <Zap className="w-5 h-5 inline-block mr-2" /> Get Started
+              </motion.button>
+            </div>
           </motion.div>
 
           {/* Floating Robot Logo */}
@@ -166,7 +168,7 @@ export const Hero = () => {
                 <img 
                   src="https://i.postimg.cc/CMNN97jZ/INNO-LOGO-FINAL.png"
                   alt="Innobotix Logo"
-                  className="w-32 h-32 md:w-40 md:h-40 object-contain"
+                  className="w-32 h-32 md:w-40 md:h-40 object-contain animate-pulse-slow"
                 />
               </motion.div>
               

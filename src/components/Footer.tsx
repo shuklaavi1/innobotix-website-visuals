@@ -3,7 +3,11 @@ import { Bot, Youtube, Users, MessageCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-export const Footer = () => {
+interface FooterProps {
+  fixed?: boolean;
+}
+
+export const Footer = ({ fixed = false }: FooterProps) => {
   const navigate = useNavigate();
 
   const quickLinks = [
@@ -20,7 +24,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-black border-t border-gray-800">
+    <footer className={`${fixed ? 'fixed bottom-0 left-0 right-0 z-40' : 'relative'} bg-black border-t border-gray-800`}>
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
       

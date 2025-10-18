@@ -30,7 +30,7 @@ exports.handler = async (event) => {
       messages: finalMessages,
       temperature: typeof temperature === 'number' ? temperature : 0.4,
       max_tokens: typeof max_tokens === 'number' ? max_tokens : 1200,
-      stream: false // We simulate streaming on the client with animations
+      stream: false // You can toggle to true and upgrade client to stream
     };
 
     const resp = await fetch(PERPLEXITY_URL, {

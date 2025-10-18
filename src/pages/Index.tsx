@@ -33,10 +33,10 @@ const Index = () => {
           <div className="absolute w-1 h-1 bg-pink-400 rounded-full animate-pulse" style={{top: '30%', left: '70%', animationDelay: '1.5s'}}></div>
         </div>
         
-        <div className="relative z-10">
+        <div className="relative z-10 min-h-screen flex flex-col">
           <Navigation />
           <Hero />
-          <Footer />
+          <Footer fixed />
         </div>
       </div>
     </>
