@@ -14,12 +14,14 @@ export const Navigation = () => {
     { name: "Starter Kits", action: () => navigate("/starter-kits") },
     { name: "Custom Builds", action: () => navigate("/custom-builds") },
     { name: "Innobot", action: () => navigate("/innobot") },
-    { name: "About", action: () => navigate("/about") }
+    { name: "About", action: () => navigate("/about") },
+    { name: "Terms", action: () => navigate("/terms") },
+    { name: "Privacy", action: () => navigate("/privacy") }
   ];
 
   return (
     <motion.nav 
-      className="sticky top-0 z-50 bg-black/80 backdrop-blur-xl border-b border-gray-800"
+      className="sticky top-0 z-50 bg-black/85 backdrop-blur-xl border-b border-gray-800"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}

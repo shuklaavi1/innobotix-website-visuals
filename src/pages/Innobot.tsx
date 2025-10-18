@@ -160,15 +160,7 @@ const Innobot = () => {
     return false;
   };
 
-  // Clean markdown from API response
-  const cleanMarkdownResponse = (text: string): string => {
-    return text
-      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove **bold** formatting
-      .replace(/\*(.*?)\*/g, '$1') // Remove *italic* formatting
-      .replace(/`(.*?)`/g, '$1') // Remove `code` formatting
-      .replace(/#{1,6}\s*(.*)/g, '$1') // Remove # headers
-      .trim();
-  };
+  // Preserve Markdown (Perplexity returns Markdown; we render as pre-wrapped text)
 
   // Typing animation effect - made faster
   const typeWriter = (text: string, callback: (currentText: string) => void) => {
@@ -218,40 +210,20 @@ const Innobot = () => {
     setMessages(prev => [...prev, aiMessage]);
 
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyA5W6cpU5fEqQbjp1Or0R6snHwIHwKrj2k`, {
+      const response = await fetch('/api/perplexity-chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `You are Innobot, an expert AI assistant specializing in robotics, Arduino, electronics, and engineering. Provide clear, concise, and helpful answers. Use technical accuracy while keeping explanations accessible. Do not use markdown formatting in your response.
-
-User question: ${currentInput}`
-            }]
-          }],
-          generationConfig: {
-            temperature: 0.7,
-            topP: 0.8,
-            topK: 40,
-            maxOutputTokens: 1024,
-          }
+          messages: [
+            { role: 'user', content: currentInput }
+          ]
         })
       });
 
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
       const data = await response.json();
-      
-      let aiResponse = "I'm having trouble processing your request right now. Please try again.";
-      
-      if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
-        const rawResponse = data.candidates[0].content.parts[0].text;
-        aiResponse = cleanMarkdownResponse(rawResponse);
-      }
+      const aiResponse = (data?.content as string) || "I'm having trouble processing your request right now. Please try again.";
 
       typeWriter(aiResponse, (currentText) => {
         setMessages(prev => 
@@ -276,7 +248,7 @@ User question: ${currentInput}`
       }
 
     } catch (error) {
-      console.error('Error calling Gemini API:', error);
+      console.error('Error calling Perplexity API:', error);
       const errorMessage = "I'm having trouble connecting right now. Please check your connection and try again.";
       
       typeWriter(errorMessage, (currentText) => {

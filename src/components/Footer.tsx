@@ -95,6 +95,26 @@ export const Footer = () => {
             </ul>
           </motion.div>
 
+          {/* Trust badges / awards */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <h3 
+              className="text-xl font-bold mb-6 text-white"
+              style={{ fontFamily: 'Orbitron, monospace' }}
+            >
+              Trusted By
+            </h3>
+            <div className="flex items-center gap-4">
+              <div className="px-3 py-2 rounded-lg bg-gray-800/50 border border-gray-700/50 text-gray-300 text-sm">YC-inspired Design</div>
+              <div className="px-3 py-2 rounded-lg bg-gray-800/50 border border-gray-700/50 text-gray-300 text-sm">STEM Excellence</div>
+              <div className="px-3 py-2 rounded-lg bg-gray-800/50 border border-gray-700/50 text-gray-300 text-sm">Made in India</div>
+            </div>
+          </motion.div>
+
           {/* Contact & Social */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -146,20 +166,25 @@ export const Footer = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           viewport={{ once: true }}
         >
-          <p 
-            className="text-gray-400 text-sm"
-            style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-          >
-            © 2024 Innobotix. All rights reserved. Built with ❤️ for robotics enthusiasts.
-          </p>
+          <div>
+            <p 
+              className="text-gray-400 text-sm"
+              style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+            >
+              © 2024 Innobotix. All rights reserved.
+            </p>
+            <p className="text-xs text-white/60">Innobotix — Where India builds robotics futures.</p>
+          </div>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <button 
+              onClick={() => navigate('/privacy')}
               className="text-gray-400 hover:text-cyan-400 text-sm transition-all duration-300"
               style={{ fontFamily: 'Space Grotesk, sans-serif' }}
             >
               Privacy Policy
             </button>
             <button 
+              onClick={() => navigate('/terms')}
               className="text-gray-400 hover:text-cyan-400 text-sm transition-all duration-300"
               style={{ fontFamily: 'Space Grotesk, sans-serif' }}
             >
