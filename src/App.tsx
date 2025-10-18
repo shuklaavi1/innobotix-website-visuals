@@ -26,6 +26,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/chat" element={<Innobot />} />
             <Route path="/starter-kits" element={<StarterKits />} />
             <Route path="/custom-builds" element={<CustomBuilds />} />
             <Route path="/innobot" element={<Innobot />} />
