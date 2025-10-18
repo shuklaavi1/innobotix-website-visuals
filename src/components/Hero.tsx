@@ -84,28 +84,27 @@ export const Hero = () => {
           initial="hidden"
           animate="visible"
         >
-          {/* Main Headline */}
+          {/* Main Headline (Lovable-style) */}
           <motion.h1 
             className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8"
             variants={itemVariants}
-            style={{ fontFamily: 'Orbitron, monospace' }}
+            style={{ fontFamily: 'Inter, ui-sans-serif, system-ui' }}
           >
-            <span className="block text-white">Engineering</span>
-            <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent animate-pulse">
-              Tomorrow's
+            <span className="block text-white">
+              Build robotics project roadmaps within minutes
             </span>
-            <span className="block text-white">Intelligence</span>
+            <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              with Innobotix.
+            </span>
           </motion.h1>
           
           {/* Subtitle */}
           <motion.p 
             className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed"
             variants={itemVariants}
-            style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+            style={{ fontFamily: 'Inter, ui-sans-serif, system-ui' }}
           >
-            Build, Customize, and Interact with Real Robots + AI. 
-            <br className="hidden md:block" />
-            Professional-grade kits and custom solutions for the next generation.
+            India’s next-gen AI agent platform to turn ideas into circuits, code, and real prototypes.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -119,12 +118,12 @@ export const Hero = () => {
             >
               <Button 
                 size="lg"
-                onClick={() => navigate("/starter-kits")}
+                onClick={() => navigate("/innobot")}
                 className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white font-bold text-lg px-8 py-6 rounded-2xl border-2 border-blue-400/50 shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] transition-all duration-300"
-                style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                style={{ fontFamily: 'Inter, ui-sans-serif, system-ui' }}
               >
                 <Zap className="w-5 h-5 mr-2" />
-                Shop Kits
+                Start Your Project
               </Button>
             </motion.div>
             
@@ -134,12 +133,12 @@ export const Hero = () => {
             >
               <Button 
                 size="lg"
-                onClick={() => navigate("/innobot")}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold text-lg px-8 py-6 rounded-2xl border-2 border-purple-400/50 shadow-[0_0_20px_rgba(147,51,234,0.3)] hover:shadow-[0_0_30px_rgba(147,51,234,0.5)] transition-all duration-300"
-                style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                onClick={() => navigate("/starter-kits")}
+                className="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white font-bold text-lg px-8 py-6 rounded-2xl border-2 border-gray-600/50 transition-all duration-300"
+                style={{ fontFamily: 'Inter, ui-sans-serif, system-ui' }}
               >
                 <Bot className="w-5 h-5 mr-2" />
-                Talk to Innobot AI
+                Explore Starter Kits
               </Button>
             </motion.div>
           </motion.div>

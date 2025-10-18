@@ -36,9 +36,6 @@ const Index = () => {
         <div className="relative z-10">
           <Navigation />
           <Hero />
-          <StarterKits />
-          <Services />
-          <Testimonials />
           <Footer />
         </div>
       </div>
